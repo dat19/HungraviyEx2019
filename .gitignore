@@ -10,6 +10,9 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 
+/[Aa]ssets/TextMesh Pro/
+/**/PrivateResources/
+
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
 
@@ -58,3 +61,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Private Resources
+/[Aa]ssets/PrivateResources/
