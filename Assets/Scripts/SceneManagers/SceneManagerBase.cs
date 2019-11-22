@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GreeningEx2019
+namespace HungraviyEx2019
 {
     /// <summary>
     /// シーンを制御するためのマネージャークラスの親クラス。

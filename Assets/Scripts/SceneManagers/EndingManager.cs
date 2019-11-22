@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GreeningEx2019
+namespace HungraviyEx2019
 {
     public class EndingManager : SceneManagerBase
     {

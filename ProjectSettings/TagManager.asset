@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Clear
+  - DamageTile
+  - Enemy
+  - Blackhole
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -13,6 +18,10 @@ TagManager:
   - UI
   - 
   - 
+  - Player
+  - Enemy
+  - Blackhole
+  - Map
   - 
   - 
   - 
@@ -32,11 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PPS
   m_SortingLayers:
   - name: Default
     uniqueID: 0

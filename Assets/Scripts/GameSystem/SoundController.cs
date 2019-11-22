@@ -7,7 +7,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace GreeningEx2019
+namespace HungraviyEx2019
 {
     /// <summary>
     /// BGMやSEを制御するクラスです。

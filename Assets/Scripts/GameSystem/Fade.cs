@@ -6,7 +6,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GreeningEx2019
+namespace HungraviyEx2019
 {
     public class Fade : MonoBehaviour
     {

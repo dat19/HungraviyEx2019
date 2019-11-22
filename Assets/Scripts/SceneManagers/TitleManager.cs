@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GreeningEx2019
+namespace HungraviyEx2019
 {
     public class TitleManager : SceneManagerBase
     {
@@ -14,15 +14,14 @@ namespace GreeningEx2019
             SceneManager.SetActiveScene(gameObject.scene);            
         }
 
-#if DEBUG
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButtonDown(0))
             {
                 SoundController.Play(SoundController.SeType.Click);
+                GameParams.NewGame();
                 SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
             }
         }
-#endif
     }
 }

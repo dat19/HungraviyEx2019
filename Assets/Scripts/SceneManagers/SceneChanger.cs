@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GreeningEx2019
+namespace HungraviyEx2019
 {
     /// <summary>
     /// <para>シーンの切り替えを制御するクラスです。</para>
@@ -107,6 +107,11 @@ namespace GreeningEx2019
         /// </summary>
         static int unloadSceneCount = 0;
 
+        /// <summary>
+        /// 読み込み済みのステージ名。読み込んでいない場合は空文字列。
+        /// </summary>
+        static string loadedStageName = "";
+
         private void Awake()
         {
             Instance = this;
@@ -190,6 +195,11 @@ namespace GreeningEx2019
                 unloadSceneOperations[unloadSceneCount] = SceneManager.UnloadSceneAsync(NowScene.ToString());
                 unloadSceneCount++;
             }
+            if (loadedStageName.Length > 0)
+            {
+                unloadSceneOperations[unloadSceneCount] = SceneManager.UnloadSceneAsync(loadedStageName);
+                unloadSceneCount++;
+            }
 
             // シーン切り替え
             NowScene = NextScene;
@@ -198,19 +208,29 @@ namespace GreeningEx2019
             // シーンをアクティブにする
             loadingSceneOperations[0].allowSceneActivation = true;
 
+            // シーンの解放の完了を待つ
+            for (int i = 0; i < unloadSceneCount; i++)
+            {
+                if (!unloadSceneOperations[i].isDone)
+                {
+                    yield return unloadSceneOperations[i];
+                }
+            }
+
+            // ゲームならステージ読み込み
+            if (NowScene == SceneType.Game)
+            {
+                loadedStageName = GameParams.StageName;
+                loadingSceneOperations[loadingSceneOperationCount] = SceneManager.LoadSceneAsync(loadedStageName, LoadSceneMode.Additive);
+                loadingSceneOperationCount++;
+            }
+
             // シーンの読み込みと解放の完了を待つ
             for (int i=0;i<loadingSceneOperationCount;i++)
             {
                 if (!loadingSceneOperations[i].isDone)
                 {
                     yield return loadingSceneOperations[i];
-                }
-            }
-            for (int i = 0; i < unloadSceneCount; i++)
-            {
-                if (!unloadSceneOperations[i].isDone)
-                {
-                    yield return unloadSceneOperations[i];
                 }
             }
             // シーンの初期化を待つ
