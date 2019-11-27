@@ -2,6 +2,6 @@
  2019年度生用はんぐらびぃ改修用リポジトリー
 
 # 実装のメモ
-- [モックアップ](Documents/Mockup.md)
-- [プレイヤーの操作：ブラックホール](Documents/Blackhole.md)
-- [ぐらびぃ](Documents/Graviy.md)
+- [モックアップ](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Mockup.md)
+- [プレイヤーの操作：ブラックホール](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Player.md)
+- [ぐらびぃ](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Graviy.md)
