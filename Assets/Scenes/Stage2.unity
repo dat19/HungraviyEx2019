@@ -385,6 +385,16 @@ PrefabInstance:
       propertyPath: m_ChunkCullingBounds.y
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3664157343945937886, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1314145923
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664157343945937886, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3664157345081529244, guid: 68fdf296d24f3e64582027a46e323756,
         type: 3}
       propertyPath: m_ChunkCullingBounds.x
@@ -394,6 +404,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ChunkCullingBounds.y
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664157345081529244, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1314145923
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664157345081529244, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3664157344684379786, guid: 68fdf296d24f3e64582027a46e323756,
         type: 3}
@@ -405,6 +425,16 @@ PrefabInstance:
       propertyPath: m_ChunkCullingBounds.y
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3664157344684379786, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1314145923
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664157344684379786, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3664157344401443750, guid: 68fdf296d24f3e64582027a46e323756,
         type: 3}
       propertyPath: m_ChunkCullingBounds.x
@@ -414,6 +444,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ChunkCullingBounds.y
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664157344401443750, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1314145923
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664157344401443750, guid: 68fdf296d24f3e64582027a46e323756,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68fdf296d24f3e64582027a46e323756, type: 3}

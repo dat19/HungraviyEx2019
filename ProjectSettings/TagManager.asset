@@ -22,8 +22,8 @@ TagManager:
   - Enemy
   - Blackhole
   - Map
-  - 
-  - 
+  - Item
+  - BG
   - 
   - 
   - 
@@ -45,4 +45,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BG
+    uniqueID: 171509363
+    locked: 0
+  - name: Map
+    uniqueID: 1314145923
+    locked: 0
+  - name: Enemy
+    uniqueID: 1138323795
+    locked: 0
+  - name: Graviy
+    uniqueID: 2736641107
+    locked: 0
+  - name: Blackhole
+    uniqueID: 1515370119
     locked: 0
