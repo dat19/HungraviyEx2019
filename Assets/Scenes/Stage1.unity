@@ -175,6 +175,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95681742045279830, guid: 6e24f00a32e55c541808b56e1f227e61,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 011dabe0c908f2044a0a09c690031f7f, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e24f00a32e55c541808b56e1f227e61, type: 3}
 --- !u!1001 &1144133851
@@ -231,26 +236,6 @@ PrefabInstance:
     - target: {fileID: 4050686507607822, guid: ba41a6ae9891add4795e6655829041d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3664157344548758194, guid: ba41a6ae9891add4795e6655829041d5,
-        type: 3}
-      propertyPath: m_ChunkCullingBounds.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3664157344548758194, guid: ba41a6ae9891add4795e6655829041d5,
-        type: 3}
-      propertyPath: m_ChunkCullingBounds.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3664157344583997554, guid: ba41a6ae9891add4795e6655829041d5,
-        type: 3}
-      propertyPath: m_ChunkCullingBounds.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3664157344583997554, guid: ba41a6ae9891add4795e6655829041d5,
-        type: 3}
-      propertyPath: m_ChunkCullingBounds.y
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba41a6ae9891add4795e6655829041d5, type: 3}

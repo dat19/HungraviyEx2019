@@ -131,14 +131,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blackhole
       objectReference: {fileID: 0}
-    - target: {fileID: 1162191194862796, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14, type: 3}
-      propertyPath: m_TagString
-      value: Blackhole
-      objectReference: {fileID: 0}
-    - target: {fileID: 1162191194862796, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4614929263301240, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -183,10 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 212520827345757656, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14,
+    - target: {fileID: 3642329762558733473, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: m_LinearDrag
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14, type: 3}
