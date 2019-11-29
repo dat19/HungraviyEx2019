@@ -185,11 +185,11 @@ FixedUpdateに以下の処理を実装します。
 ## 描画順位を整える
 デフォルトだと、マップとブラックホールの優先順位が同じなので、マップに隠れたり隠れなかったりが不安定になります。優先順位は、Sprite RendererのSorting Layerか、Order in Layerで設定します。一般的には、種類ごとにSorting Layerで優先順位を設定した上で、同じレイヤー内の優先順位をOrder in Layerで設定します。
 
-ぐらびぃ(Graviy)、敵(Enemy)、マップ(Map)、ブラックホール(Blackhole)、アイテム(Item)のSorting Layerを定義して、以下の通り優先順位を設定しておきます。HierarchyウィンドウでBlackholeオブジェクトを選択したら、InspectorウィンドウのSprite RendererのにあるSorting Layerで設定します。
+アイテム(Item)、ぐらびぃ(Graviy)、敵(Enemy)、ブラックホール(Blackhole)、マップ(Map)のSorting Layerを定義して、以下の通り優先順位を設定しておきます。HierarchyウィンドウでBlackholeオブジェクトを選択したら、InspectorウィンドウのSprite RendererのにあるSorting Layerで設定します。
 
 優先順位は自由に設定して構いません。参考までに、以下の並び順を示しておきます。並べるのはSoring Layersの設定は、上から優先順位の低い順です。
 
-- Default < Map < Enemy < Graviy < Blackhole
+- Default < Map < Blackhole < Enemy < Graviy < Item
 
 
 ## マウスの移動

@@ -24,7 +24,7 @@ TagManager:
   - Map
   - Item
   - BG
-  - 
+  - Toge
   - 
   - 
   - 
@@ -52,12 +52,15 @@ TagManager:
   - name: Map
     uniqueID: 1314145923
     locked: 0
+  - name: Blackhole
+    uniqueID: 1515370119
+    locked: 0
   - name: Enemy
     uniqueID: 1138323795
     locked: 0
   - name: Graviy
     uniqueID: 2736641107
     locked: 0
-  - name: Blackhole
-    uniqueID: 1515370119
+  - name: Item
+    uniqueID: 1147851535
     locked: 0

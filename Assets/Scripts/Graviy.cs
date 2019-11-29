@@ -62,12 +62,8 @@ namespace HungraviyEx2019 {
         {
             if (!CanMove)
             {
-                rb.gravityScale = 0f;
+                rb.velocity = Vector2.zero;
                 return;
-            }
-            else
-            {
-                rb.gravityScale = gravityScale;
             }
 
             // ブラックホールが発生しているか判定
@@ -75,13 +71,13 @@ namespace HungraviyEx2019 {
             if (Blackhole.IsSpawn)
             {
                 Transform bl = Blackhole.Instance.transform;
-                Vector3 move = bl.position - transform.position;
+                Vector2 move = bl.position - transform.position;
 
                 float kyori = move.magnitude;
                 if (kyori <= distanceMax)
                 {
                     float kasoku = (-speedMax / distanceMax) * kyori + speedMax;
-                    rb.AddForce(move.normalized * kasoku, ForceMode2D.Impulse);
+                    rb.AddForce(move.normalized * kasoku, ForceMode2D.Force);
                     spRenderer.flipX = Blackhole.Instance.transform.position.x < transform.position.x;
                     anim.SetInteger("State", (int)AnimType.Sucked);
                     isSucked = true;
