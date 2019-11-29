@@ -5,3 +5,4 @@
 - [モックアップ](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Mockup.md)
 - [プレイヤーの操作：ブラックホール](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Player.md)
 - [ぐらびぃ](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Graviy.md)
+- [カメラ](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Camera.md)
