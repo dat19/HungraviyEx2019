@@ -6,6 +6,8 @@ namespace HungraviyEx2019
 {
     public class Blackhole : MonoBehaviour
     {
+        public static Blackhole Instance = null;
+
         [Tooltip("最高速度"), SerializeField]
         float speedMax = 10f;
 
@@ -34,6 +36,7 @@ namespace HungraviyEx2019
 
         private void Awake()
         {
+            Instance = this;
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             animSpawn = false;
