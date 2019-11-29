@@ -320,4 +320,15 @@ Awake()内に以下を追加
 spRenderer = GetComponentInChildren<SpriteRenderer>();
 ```
 
-FixedUpdate()に処理を加えます。ブラックホールに引き寄せられたかどうかでアニメの設定が変化するので、bool型のローカル変数isSuckedを追加して、引き寄せられたらtrueにします。
+FixedUpdate()に以下のような処理を加えます。
+
+- ブラックホールが発生しているかの判定の前に、bool型のローカル変数isSuckedを定義して、falseを代入しておく
+- AddForceをしたらブラックホールの影響を受けたということになるので、直下に以下の処理を追加
+  - アニメのStateをSucked
+  - ブラックホールがぐらびぃの左ならspRenderer.SpriteRendererのflipXをtrue、右ならfalseにする
+  - isSuckedにtrueを代入
+- ブラックホールが発生している時のif文が終わったところで、isSuckedがfalseかを判定して、以下を処理
+  - rb.velocity.yが0以上なら上昇しているので、アニメのStateをIdleにする
+  - 下降しているなら、アニメをFallにする
+
+以上で基本操作は実装完了です。一旦、カメラの実装に移りましょう。
