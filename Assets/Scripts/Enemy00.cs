@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace HungraviyEx2019
 {
+    [RequireComponent(typeof(Suiyose))]
     public class Enemy00 : MonoBehaviour
     {
         [Tooltip("歩く速度"), SerializeField]
@@ -58,6 +59,8 @@ namespace HungraviyEx2019
         ContactFilter2D contactFilter2D = new ContactFilter2D();
         SpriteRenderer spRenderer = null;
         ContactPoint2D[] contactPoints = new ContactPoint2D[HitMax];
+        Suiyose suiyose = null;
+        bool lastSucked = false;
 
         private void Awake()
         {
@@ -69,6 +72,7 @@ namespace HungraviyEx2019
             capCollider = GetComponent<CapsuleCollider2D>();
             contactFilter2D.layerMask = LayerMask.GetMask("Map");
             spRenderer = GetComponentInChildren<SpriteRenderer>();
+            suiyose = GetComponent<Suiyose>();
         }
 
         private void FixedUpdate()
@@ -79,7 +83,31 @@ namespace HungraviyEx2019
                 return;
             }
 
-            UpdateMove();
+            switch (state)
+            {
+                case StateType.Move:
+                    // TODO: 縮小チェック
+                    // 吸い寄せされていたら、歩きはキャンセルして、吸い寄せ
+                    if (suiyose.Suck())
+                    {
+                        lastSucked = true;
+                        anim.SetInteger("State", (int)AnimType.Sucked);
+                        break;
+                    }
+
+                    if (lastSucked)
+                    {
+                        // 吸い寄せられていたら、歩き速度未満になるまでは歩きに復帰しない
+                        float spd = rb.velocity.magnitude;
+                        if (spd >= walkSpeed)
+                        {
+                            break;
+                        }
+                    }
+                    lastSucked = false;
+                    UpdateMove();
+                    break;
+            }
         }
 
         void UpdateMove()
