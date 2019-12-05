@@ -13,19 +13,19 @@ namespace HungraviyEx2019
 
         void Start()
         {
-            offset = transform.position - Graviy.Instance.transform.position;
+            offset = transform.position - Graviy.instance.transform.position;
         }
 
         void LateUpdate()
         {
-            Vector3 next = Graviy.Instance.transform.position + offset;
+            Vector3 next = Graviy.instance.transform.position + offset;
             if (next.x < transform.position.x)
             {
                 next.x = transform.position.x;
             }
             transform.position = next;
 
-            Graviy.Instance.AdjustLeftPosition();
+            Graviy.instance.AdjustLeftPosition();
         }
     }
 }

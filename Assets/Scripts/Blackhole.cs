@@ -6,7 +6,7 @@ namespace HungraviyEx2019
 {
     public class Blackhole : MonoBehaviour
     {
-        public static Blackhole Instance = null;
+        public static Blackhole instance = null;
 
         [Tooltip("最高速度"), SerializeField]
         float speedMax = 10f;
@@ -23,7 +23,7 @@ namespace HungraviyEx2019
 
         Rigidbody2D rb;
         Animator anim;
-        float Energy= 100f;
+        float energy= 100f;
         Camera myCamera = null;
         /// <summary>
         /// 前回の発生状況
@@ -36,7 +36,7 @@ namespace HungraviyEx2019
 
         private void Awake()
         {
-            Instance = this;
+            instance = this;
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
             animSpawn = false;
@@ -47,7 +47,7 @@ namespace HungraviyEx2019
             if (!CanMove) return;
 
             bool mouseClicked = Input.GetMouseButton(0);
-            IsSpawn = (mouseClicked && (Energy > 0));
+            IsSpawn = (mouseClicked && (energy > 0));
             anim.SetBool("Spawn", IsSpawn);
 
             // 発生アニメでなければ移動なし

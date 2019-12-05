@@ -50,7 +50,7 @@ namespace HungraviyEx2019
             isSucked = false;
             if (Blackhole.IsSpawn)
             {
-                var bl = Blackhole.Instance.transform;
+                var bl = Blackhole.instance.transform;
                 Vector2 move = bl.position - transform.position;
 
                 var kyori = move.magnitude;

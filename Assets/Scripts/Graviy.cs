@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HungraviyEx2019 {
     public class Graviy : MonoBehaviour
     {
-        public static Graviy Instance = null;
+        public static Graviy instance = null;
 
         [Tooltip("重力係数"), SerializeField]
         float gravityScale = 1f;
@@ -42,7 +42,7 @@ namespace HungraviyEx2019 {
 
         void Awake()
         {
-            Instance = this;
+            instance = this;
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponentInChildren<Animator>();
             anim.SetInteger("State", (int)AnimType.Idle);
@@ -67,7 +67,7 @@ namespace HungraviyEx2019 {
             if (suiyose.Suck())
             {
                 // 吸い寄せられている
-                spRenderer.flipX = Blackhole.Instance.transform.position.x < transform.position.x;
+                spRenderer.flipX = Blackhole.instance.transform.position.x < transform.position.x;
                 anim.SetInteger("State", (int)AnimType.Sucked);
             }
             else
