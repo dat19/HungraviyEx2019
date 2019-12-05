@@ -54,11 +54,11 @@ namespace HungraviyEx2019
         Rigidbody2D rb = null;
         Animator anim = null;
 
-        RaycastHit2D[] hits = new RaycastHit2D[HitMax];
+        readonly RaycastHit2D[] hits = new RaycastHit2D[HitMax];
         CapsuleCollider2D capCollider = null;
         ContactFilter2D contactFilter2D = new ContactFilter2D();
         SpriteRenderer spRenderer = null;
-        ContactPoint2D[] contactPoints = new ContactPoint2D[HitMax];
+        readonly ContactPoint2D[] contactPoints = new ContactPoint2D[HitMax];
         Suiyose suiyose = null;
         bool lastSucked = false;
 

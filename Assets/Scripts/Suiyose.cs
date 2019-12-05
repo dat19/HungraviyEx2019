@@ -16,7 +16,7 @@ namespace HungraviyEx2019
         /// </summary>
         public bool isSucked = false;
 
-        static Rigidbody2D rb = null;
+        Rigidbody2D rb = null;
         /// <summary>
         /// 処理したフレーム数。すでに同じフレームが設定されていたら、別で処理済みなので処理しない
         /// </summary>
@@ -31,7 +31,6 @@ namespace HungraviyEx2019
         {
             if (!Graviy.CanMove)
             {
-                Debug.Log($"  cant move");
                 rb.velocity = Vector2.zero;
                 return;
             }
@@ -52,8 +51,7 @@ namespace HungraviyEx2019
             if (Blackhole.IsSpawn)
             {
                 var bl = Blackhole.Instance.transform;
-                var move = bl.position - transform.position;
-                move.z = 0;
+                Vector2 move = bl.position - transform.position;
 
                 var kyori = move.magnitude;
                 if (kyori <= distanceMax)

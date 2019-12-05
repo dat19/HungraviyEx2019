@@ -7,10 +7,6 @@ namespace HungraviyEx2019 {
     {
         public static Graviy Instance = null;
 
-        [Tooltip("ブラックホールの最大距離"), SerializeField]
-        float distanceMax = 15f;
-        [Tooltip("ブラックホールの距離が0の時の加速度"), SerializeField]
-        float speedMax = 0.5f;
         [Tooltip("重力係数"), SerializeField]
         float gravityScale = 1f;
 
@@ -31,6 +27,7 @@ namespace HungraviyEx2019 {
         static CapsuleCollider2D capsuleCollider2D = null;
         static Camera mainCamera = null;
         static SpriteRenderer spRenderer = null;
+        static Suiyose suiyose = null;
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -51,6 +48,7 @@ namespace HungraviyEx2019 {
             anim.SetInteger("State", (int)AnimType.Idle);
             capsuleCollider2D = GetComponent<CapsuleCollider2D>();
             spRenderer = GetComponentInChildren<SpriteRenderer>();
+            suiyose = GetComponent<Suiyose>();
         }
 
         private void Start()
@@ -66,27 +64,15 @@ namespace HungraviyEx2019 {
                 return;
             }
 
-            // ブラックホールが発生しているか判定
-            bool isSucked = false;
-            if (Blackhole.IsSpawn)
+            if (suiyose.Suck())
             {
-                Transform bl = Blackhole.Instance.transform;
-                Vector2 move = bl.position - transform.position;
-
-                float kyori = move.magnitude;
-                if (kyori <= distanceMax)
-                {
-                    float kasoku = (-speedMax / distanceMax) * kyori + speedMax;
-                    rb.AddForce(move.normalized * kasoku, ForceMode2D.Force);
-                    spRenderer.flipX = Blackhole.Instance.transform.position.x < transform.position.x;
-                    anim.SetInteger("State", (int)AnimType.Sucked);
-                    isSucked = true;
-                }
+                // 吸い寄せられている
+                spRenderer.flipX = Blackhole.Instance.transform.position.x < transform.position.x;
+                anim.SetInteger("State", (int)AnimType.Sucked);
             }
-
-            // 吸い寄せられていない時
-            if (!isSucked)
+            else
             {
+                // 吸い寄せられていない時
                 if (rb.velocity.y >= 0)
                 {
                     anim.SetInteger("State", (int)AnimType.Idle);
