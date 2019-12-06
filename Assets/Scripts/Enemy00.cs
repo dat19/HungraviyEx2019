@@ -15,6 +15,8 @@ namespace HungraviyEx2019
         float footCheckDistance = 0.2f;
         [Tooltip("歩き速度とアニメの係数"), SerializeField]
         float velocityToAnimSpeed = 0.75f;
+        [Tooltip("出現させるスイーツ"), SerializeField]
+        GameObject sweets = null;
 
         /// <summary>
         /// 行動状態の種類
@@ -61,6 +63,7 @@ namespace HungraviyEx2019
         readonly ContactPoint2D[] contactPoints = new ContactPoint2D[HitMax];
         Suiyose suiyose = null;
         bool lastSucked = false;
+        EnemyInBlackhole enemyInBlackhole = null;
 
         private void Awake()
         {
@@ -73,6 +76,7 @@ namespace HungraviyEx2019
             contactFilter2D.layerMask = LayerMask.GetMask("Map");
             spRenderer = GetComponentInChildren<SpriteRenderer>();
             suiyose = GetComponent<Suiyose>();
+            enemyInBlackhole = GetComponentInChildren<EnemyInBlackhole>();
         }
 
         private void FixedUpdate()
@@ -86,7 +90,18 @@ namespace HungraviyEx2019
             switch (state)
             {
                 case StateType.Move:
-                    // TODO: 縮小チェック
+                    // 縮小チェック
+                    EnemyInBlackhole.StateType instate = enemyInBlackhole.FixedUpdateState();
+                    if (instate == EnemyInBlackhole.StateType.In)
+                    {
+                        anim.SetInteger("State", (int)AnimType.Blackhole);
+                        anim.SetFloat("Speed", 1);
+                        state = StateType.Blackhole;
+
+                        suiyose.Suck();
+                        lastSucked = true;
+                        break;
+                    }
                     // 吸い寄せされていたら、歩きはキャンセルして、吸い寄せ
                     if (suiyose.Suck())
                     {
@@ -107,8 +122,29 @@ namespace HungraviyEx2019
                     lastSucked = false;
                     UpdateMove();
                     break;
+
+                case StateType.Blackhole:
+                    lastSucked = true;
+
+                    // 吸い込まれのチェック
+                    EnemyInBlackhole.StateType st = enemyInBlackhole.FixedUpdateState();
+                    if (st == EnemyInBlackhole.StateType.InDone)
+                    {
+                        // 吸い込まれが完了した
+                        ToSweets();
+                        Destroy(gameObject);
+                    }
+                    else if (st == EnemyInBlackhole.StateType.None)
+                    {
+                        // 戻った
+                        state = StateType.Move;
+                        UpdateMove();
+                    }
+
+                    break;
             }
         }
+
 
         void UpdateMove()
         {
@@ -157,6 +193,14 @@ namespace HungraviyEx2019
                 // 足場がない時は、アニメをStandに変更して慣性移動
                 anim.SetInteger("State", (int)AnimType.Stand);
             }
+        }
+
+        /// <summary>
+        /// スイーツを出現させる
+        /// </summary>
+        void ToSweets()
+        {
+            Instantiate(sweets, transform.position, Quaternion.identity);
         }
     }
 }

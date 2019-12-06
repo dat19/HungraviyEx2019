@@ -19,6 +19,9 @@ namespace HungraviyEx2019
             }
         }
 
+        /// <summary>
+        /// エネルギーがあって、マウスをクリックしている時、true
+        /// </summary>
         public static bool IsSpawn { get; private set; }
 
         Rigidbody2D rb;
