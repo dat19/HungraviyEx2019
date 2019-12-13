@@ -63,9 +63,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1419a2922b4af8c4eae13d70fb05a6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceMax: 15
-  speedMax: 25
   gravityScale: 1
+  energySubBlackhole: -0.3
+  energyRecovery: 0.3
+  energyFood: 0.5
+  hungryAnim: 0.33
 --- !u!50 &7292923159428045308
 Rigidbody2D:
   serializedVersion: 4

@@ -15,6 +15,8 @@ namespace HungraviyEx2019
         float footCheckDistance = 0.2f;
         [Tooltip("歩き速度とアニメの係数"), SerializeField]
         float velocityToAnimSpeed = 0.75f;
+        [Tooltip("出現させるスイーツ"), SerializeField]
+        GameObject sweets = null;
 
         /// <summary>
         /// 行動状態の種類
@@ -56,11 +58,10 @@ namespace HungraviyEx2019
 
         readonly RaycastHit2D[] hits = new RaycastHit2D[HitMax];
         CapsuleCollider2D capCollider = null;
-        ContactFilter2D contactFilter2D = new ContactFilter2D();
         SpriteRenderer spRenderer = null;
-        readonly ContactPoint2D[] contactPoints = new ContactPoint2D[HitMax];
         Suiyose suiyose = null;
         bool lastSucked = false;
+        EnemyInBlackhole enemyInBlackhole = null;
 
         private void Awake()
         {
@@ -70,9 +71,9 @@ namespace HungraviyEx2019
             anim.SetInteger("State", (int)AnimType.Stand);
 
             capCollider = GetComponent<CapsuleCollider2D>();
-            contactFilter2D.layerMask = LayerMask.GetMask("Map");
             spRenderer = GetComponentInChildren<SpriteRenderer>();
             suiyose = GetComponent<Suiyose>();
+            enemyInBlackhole = GetComponentInChildren<EnemyInBlackhole>();
         }
 
         private void FixedUpdate()
@@ -86,7 +87,18 @@ namespace HungraviyEx2019
             switch (state)
             {
                 case StateType.Move:
-                    // TODO: 縮小チェック
+                    // 縮小チェック
+                    EnemyInBlackhole.StateType instate = enemyInBlackhole.FixedUpdateState();
+                    if (instate == EnemyInBlackhole.StateType.In)
+                    {
+                        anim.SetInteger("State", (int)AnimType.Blackhole);
+                        anim.SetFloat("Speed", 1);
+                        state = StateType.Blackhole;
+
+                        suiyose.Suck();
+                        lastSucked = true;
+                        break;
+                    }
                     // 吸い寄せされていたら、歩きはキャンセルして、吸い寄せ
                     if (suiyose.Suck())
                     {
@@ -107,24 +119,33 @@ namespace HungraviyEx2019
                     lastSucked = false;
                     UpdateMove();
                     break;
+
+                case StateType.Blackhole:
+                    lastSucked = true;
+
+                    // 吸い込まれのチェック
+                    EnemyInBlackhole.StateType st = enemyInBlackhole.FixedUpdateState();
+                    if (st == EnemyInBlackhole.StateType.InDone)
+                    {
+                        // 吸い込まれが完了した
+                        ToSweets();
+                        Destroy(gameObject);
+                    }
+                    else if (st == EnemyInBlackhole.StateType.None)
+                    {
+                        // 戻った
+                        state = StateType.Move;
+                        UpdateMove();
+                    }
+
+                    break;
             }
         }
 
+
         void UpdateMove()
         {
-            bool onGround = false;
-
-            // 着地チェック。上向きの接触があれば着地
-            int hitCount = capCollider.GetContacts(contactFilter2D, contactPoints);
-            for (int i=0; i<hitCount;i++)
-            {
-                if (contactPoints[i].normal.y >= 0.9f)
-                {
-                    onGround = true;
-                }
-            }
-
-            if (onGround)
+            if (OnGroundChecker.Check(capCollider))
             {
                 // 足場がある時は移動
                 anim.SetInteger("State", (int)AnimType.Walk);
@@ -136,7 +157,7 @@ namespace HungraviyEx2019
                     offset.x = -offset.x;
                 }
                 var footPos = transform.position + offset;
-                hitCount = Physics2D.RaycastNonAlloc(
+                var hitCount = Physics2D.RaycastNonAlloc(
                     footPos,
                     Vector2.down,
                     hits,
@@ -157,6 +178,14 @@ namespace HungraviyEx2019
                 // 足場がない時は、アニメをStandに変更して慣性移動
                 anim.SetInteger("State", (int)AnimType.Stand);
             }
+        }
+
+        /// <summary>
+        /// スイーツを出現させる
+        /// </summary>
+        void ToSweets()
+        {
+            Instantiate(sweets, transform.position, Quaternion.identity);
         }
     }
 }

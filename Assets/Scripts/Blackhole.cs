@@ -19,11 +19,13 @@ namespace HungraviyEx2019
             }
         }
 
+        /// <summary>
+        /// エネルギーがあって、マウスをクリックしている時、true
+        /// </summary>
         public static bool IsSpawn { get; private set; }
 
         Rigidbody2D rb;
         Animator anim;
-        float energy= 100f;
         Camera myCamera = null;
         /// <summary>
         /// 前回の発生状況
@@ -47,7 +49,7 @@ namespace HungraviyEx2019
             if (!CanMove) return;
 
             bool mouseClicked = Input.GetMouseButton(0);
-            IsSpawn = (mouseClicked && (energy > 0));
+            IsSpawn = (mouseClicked && (Graviy.Energy > 0));
             anim.SetBool("Spawn", IsSpawn);
 
             // 発生アニメでなければ移動なし

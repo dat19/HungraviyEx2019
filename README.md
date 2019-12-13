@@ -12,3 +12,4 @@
 ここまでで、個別のキャラクターの動きはできます。ここからは、お互いが作用する部分を作っていきます。
 
 - [敵がブラックホールに吸い込まれる](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/EnemyInBlackhole.md)
+- [エネルギー](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Energy.md)
