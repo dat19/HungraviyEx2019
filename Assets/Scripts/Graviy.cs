@@ -31,6 +31,10 @@ namespace HungraviyEx2019 {
         /// エネルギーの最大値
         /// </summary>
         public const float EnergyMax = 1f;
+        /// <summary>
+        /// エネルギーの最小値
+        /// </summary>
+        public const float EnergyMin = -0.1f;
 
         /// <summary>
         /// 無敵秒数
@@ -122,7 +126,7 @@ namespace HungraviyEx2019 {
                 }
             }
 
-            Energy = Mathf.Clamp(Energy, 0, EnergyMax);
+            Energy = Mathf.Clamp(Energy, EnergyMin, EnergyMax);
 
             // はらぺこアニメ切り替えチェック
             anim.SetLayerWeight(1, Energy < hungryAnim ? 1 : 0);
