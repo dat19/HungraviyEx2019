@@ -37,6 +37,11 @@ namespace HungraviyEx2019 {
         public const float EnergyMin = -0.1f;
 
         /// <summary>
+        /// アイテムを吸い込む秒数
+        /// </summary>
+        public const float EatSeconds = 0.5f;
+
+        /// <summary>
         /// 無敵秒数
         /// </summary>
         static float mutekiTime = 0f;
