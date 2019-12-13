@@ -9,6 +9,16 @@ namespace HungraviyEx2019 {
 
         [Tooltip("重力係数"), SerializeField]
         float gravityScale = 1f;
+        [Tooltip("ブラックホール発生時に、エネルギーを減らす秒速"), SerializeField]
+        float energySubBlackhole = -0.3f;
+        [Tooltip("着地時のエネルギーが回復秒速"), SerializeField]
+        float energyRecoveryOnGround = 0.3f;
+        [Tooltip("空中のエネルギー回復秒速"), SerializeField]
+        float energyRecoveryInTheAir = 0.1f;
+        [Tooltip("食べ物を食べた時に回復するエネルギー量"), SerializeField]
+        float energyFood = 0.5f;
+        [Tooltip("はらぺこ切り替えエネルギー"), SerializeField]
+        float hungryAnim = 0.33f;
 
         public enum AnimType
         {
@@ -16,6 +26,11 @@ namespace HungraviyEx2019 {
             Sucked,
             Fall,
         }
+
+        /// <summary>
+        /// エネルギーの最大値
+        /// </summary>
+        public const float EnergyMax = 1f;
 
         /// <summary>
         /// 無敵秒数
@@ -28,6 +43,7 @@ namespace HungraviyEx2019 {
         static Camera mainCamera = null;
         static SpriteRenderer spRenderer = null;
         static Suiyose suiyose = null;
+        static ContactFilter2D contactFilter2D = new ContactFilter2D();
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -40,6 +56,11 @@ namespace HungraviyEx2019 {
             }
         }
 
+        /// <summary>
+        /// 現在のエネルギー。0が空。1が満タン。
+        /// </summary>
+        public static float Energy { get; private set; }
+
         void Awake()
         {
             instance = this;
@@ -49,6 +70,8 @@ namespace HungraviyEx2019 {
             capsuleCollider2D = GetComponent<CapsuleCollider2D>();
             spRenderer = GetComponentInChildren<SpriteRenderer>();
             suiyose = GetComponent<Suiyose>();
+            Energy = EnergyMax;
+            contactFilter2D.layerMask = LayerMask.GetMask("Map");
         }
 
         private void Start()
@@ -83,6 +106,26 @@ namespace HungraviyEx2019 {
                 }
             }
 
+            if (Blackhole.IsSpawn)
+            {
+                Energy += energySubBlackhole * Time.fixedDeltaTime;
+            }
+            else
+            {
+                if (OnGroundChecker.Check(capsuleCollider2D))
+                {
+                    Energy += energyRecoveryOnGround * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    Energy += energyRecoveryInTheAir * Time.fixedDeltaTime;
+                }
+            }
+
+            Energy = Mathf.Clamp(Energy, 0, EnergyMax);
+
+            // はらぺこアニメ切り替えチェック
+            anim.SetLayerWeight(1, Energy < hungryAnim ? 1 : 0);
         }
 
         public void AdjustLeftPosition()

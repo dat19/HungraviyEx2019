@@ -58,9 +58,7 @@ namespace HungraviyEx2019
 
         readonly RaycastHit2D[] hits = new RaycastHit2D[HitMax];
         CapsuleCollider2D capCollider = null;
-        ContactFilter2D contactFilter2D = new ContactFilter2D();
         SpriteRenderer spRenderer = null;
-        readonly ContactPoint2D[] contactPoints = new ContactPoint2D[HitMax];
         Suiyose suiyose = null;
         bool lastSucked = false;
         EnemyInBlackhole enemyInBlackhole = null;
@@ -73,7 +71,6 @@ namespace HungraviyEx2019
             anim.SetInteger("State", (int)AnimType.Stand);
 
             capCollider = GetComponent<CapsuleCollider2D>();
-            contactFilter2D.layerMask = LayerMask.GetMask("Map");
             spRenderer = GetComponentInChildren<SpriteRenderer>();
             suiyose = GetComponent<Suiyose>();
             enemyInBlackhole = GetComponentInChildren<EnemyInBlackhole>();
@@ -148,19 +145,7 @@ namespace HungraviyEx2019
 
         void UpdateMove()
         {
-            bool onGround = false;
-
-            // 着地チェック。上向きの接触があれば着地
-            int hitCount = capCollider.GetContacts(contactFilter2D, contactPoints);
-            for (int i=0; i<hitCount;i++)
-            {
-                if (contactPoints[i].normal.y >= 0.9f)
-                {
-                    onGround = true;
-                }
-            }
-
-            if (onGround)
+            if (OnGroundChecker.Check(capCollider))
             {
                 // 足場がある時は移動
                 anim.SetInteger("State", (int)AnimType.Walk);
@@ -172,7 +157,7 @@ namespace HungraviyEx2019
                     offset.x = -offset.x;
                 }
                 var footPos = transform.position + offset;
-                hitCount = Physics2D.RaycastNonAlloc(
+                var hitCount = Physics2D.RaycastNonAlloc(
                     footPos,
                     Vector2.down,
                     hits,
