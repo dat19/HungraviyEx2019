@@ -36,13 +36,18 @@ float energyRecoveryInTheAir = 0.1f;
 float energyFood = 0.5f;
 ```
 
-エネルギーの最大値を定義しておきます。
+エネルギーの最大値と最小値を定義しておきます。最小値は、0だとすぐに回復して微妙に飛べてしまうので、それを避けるための設定です。
 
 ```cs
 /// <summary>
 /// エネルギーの最大値
 /// </summary>
 public const float EnergyMax = 1f;
+
+/// <summary>
+/// エネルギーの最小値
+/// </summary>
+public const float EnergyMin = -0.1f;
 ```
 
 エネルギーを記録しておくプロパティを定義します。
@@ -180,10 +185,10 @@ public static class OnGroundChecker
 Enemy00と同様の使い方で、着地判定をして、着地していたらエネルギーを回復させる。
 
 ## エネルギーの減りすぎ、回復しすぎを制限
-最後に、Mathf.Clamp()を使って、Energyが0～EnergyMaxの範囲に収まるようにする。
+最後に、Mathf.Clamp()を使って、EnergyがEnergyMin～EnergyMaxの範囲に収まるようにする。
 
 ```cs
-Energy = Mathf.Clamp(Energy, 0, EnergyMax);
+Energy = Mathf.Clamp(Energy, EnergyMin, EnergyMax);
 ```
 
 # 空腹時のパターン切り替え
