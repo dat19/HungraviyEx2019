@@ -116,25 +116,25 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: MutekiTime
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Inhole
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: EatSpeed
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -158,7 +158,7 @@ AnimatorController:
       m_Motion: {fileID: 7400000, guid: 896069beb86a59b439d921f051f76c6d, type: 2}
     - serializedVersion: 2
       m_State: {fileID: 4300055166250457580}
-      m_Motion: {fileID: 7400000, guid: 412caaf8340cbcc4b8c7f5d54f11778b, type: 2}
+      m_Motion: {fileID: 7400000, guid: 2b4f6ab07dd86db4aa19e198cd3ade38, type: 2}
     - serializedVersion: 2
       m_State: {fileID: 3642723738726511462}
       m_Motion: {fileID: 7400000, guid: 68df37116918a50478e1a6b367ab39a4, type: 2}
