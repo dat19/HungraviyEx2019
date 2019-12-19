@@ -45,7 +45,7 @@ namespace HungraviyEx2019 {
             get
             {
                 return spRenderer.flipX ?
-                    instance.transform.position + mouthOffsetLeft :
+                    instance.transform.position + mouthOffsetLeft:
                     instance.transform.position + mouthOffsetRight;
             }
         }
@@ -70,8 +70,8 @@ namespace HungraviyEx2019 {
         static bool isEating = false;
         static int eatingCount = 0;
         static Item[] eatingObjects = new Item[EatingMax];
-        static Vector3 mouthOffsetLeft;
-        static Vector3 mouthOffsetRight;
+        static Vector3 mouthOffsetLeft = Vector3.zero;
+        static Vector3 mouthOffsetRight = Vector3.zero;
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -103,8 +103,7 @@ namespace HungraviyEx2019 {
             isEating = false;
             eatingCount = 0;
             mouthOffsetRight = transform.Find("MouthPosition").transform.localPosition;
-            mouthOffsetLeft = mouthOffsetRight;
-            mouthOffsetLeft.x = -mouthOffsetLeft.x;
+            mouthOffsetLeft.Set(-mouthOffsetRight.x, mouthOffsetRight.y, 0);
         }
 
         private void Start()
