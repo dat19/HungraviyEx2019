@@ -15,7 +15,7 @@ namespace HungraviyEx2019
         /// <summary>
         /// 食べたとみなす距離
         /// </summary>
-        const float EatDistance = 0.1f;
+        const float EatDistance = 0.015f;
 
         const string ItemLayer = "Item";
         const string EatingLayer = "EatingItem";
@@ -31,10 +31,11 @@ namespace HungraviyEx2019
             if (!isEating) return;
 
             float t = (Time.time - eatStartTime);
+            float dist = Vector3.Distance(Graviy.MouthPosition, transform.position);
 
             if ((t >= eatTime) 
                 || ((t >= eatMinTime)
-                    && (Vector3.Distance(Graviy.MouthTransform.position, transform.position) <= EatDistance)))
+                    && (dist <= EatDistance)))
             {
                 // 食べる
                 Graviy.instance.EatDone(this);
@@ -44,7 +45,7 @@ namespace HungraviyEx2019
 
             t = Mathf.Clamp01(t / eatTime);
 
-            Vector3 next = Vector3.Lerp(transform.position, Graviy.MouthTransform.position, t);
+            Vector3 next = Vector3.Lerp(transform.position, Graviy.MouthPosition, t);
             Vector3 move = (next - transform.position) / Time.fixedDeltaTime;
             rb.velocity = move;
         }

@@ -40,7 +40,15 @@ namespace HungraviyEx2019 {
         /// </summary>
         public const float EnergyMin = -0.1f;
 
-        public static Transform MouthTransform { get; private set; }
+        public static Vector3 MouthPosition
+        {
+            get
+            {
+                return spRenderer.flipX ?
+                    instance.transform.position + mouthOffsetLeft :
+                    instance.transform.position + mouthOffsetRight;
+            }
+        }
 
         /// <summary>
         /// 同時に食べられるアイテムの数
@@ -62,6 +70,8 @@ namespace HungraviyEx2019 {
         static bool isEating = false;
         static int eatingCount = 0;
         static Item[] eatingObjects = new Item[EatingMax];
+        static Vector3 mouthOffsetLeft;
+        static Vector3 mouthOffsetRight;
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -92,7 +102,9 @@ namespace HungraviyEx2019 {
             contactFilter2D.layerMask = LayerMask.GetMask("Map");
             isEating = false;
             eatingCount = 0;
-            MouthTransform = transform.Find("MouthPosition").transform;
+            mouthOffsetRight = transform.Find("MouthPosition").transform.localPosition;
+            mouthOffsetLeft = mouthOffsetRight;
+            mouthOffsetLeft.x = -mouthOffsetLeft.x;
         }
 
         private void Start()
