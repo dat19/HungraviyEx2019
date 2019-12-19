@@ -23,6 +23,10 @@ namespace HungraviyEx2019 {
         float eatItemSeconds = 0.5f;
         [Tooltip("アイテムを吸い込める最低秒数"), SerializeField]
         float eatItemMinSeconds = 0.3f;
+        [Tooltip("無敵秒数"), SerializeField]
+        float mutekiSeconds = 2f;
+        [Tooltip("ふっとばす時の加速"), SerializeField]
+        float blowOffAdd = 15f;
 
         public enum AnimType
         {
@@ -168,10 +172,16 @@ namespace HungraviyEx2019 {
                     isEating = false;
                 }
             }
+
+            // 無敵処理
+            mutekiTime -= Time.fixedDeltaTime;
+            anim.SetFloat("MutekiTime", mutekiTime);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            if (mutekiTime >= 0) return;
+
             if (collision.collider.CompareTag("Item"))
             {
                 if (eatingCount >= EatingMax) {
@@ -192,6 +202,58 @@ namespace HungraviyEx2019 {
                     anim.SetFloat("EatSpeed", 1);
                 }
             }
+            else if (collision.collider.CompareTag("Enemy"))
+            {
+                Miss(collision.collider);
+            }
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            OnCollisionEnter2D(collision);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("DamageTile"))
+            {
+                Miss(collision);
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            OnTriggerEnter2D(collision);            
+        }
+
+        void Miss(Collider2D col)
+        {
+            if (mutekiTime >= 0) { return; }
+
+            // ゲームオーバーチェック
+            if (GameParams.LifeDecrement())
+            {
+                Debug.Log($"ゲームオーバーへ");
+                return;
+            }
+
+            // 無敵時間設定
+            mutekiTime = mutekiSeconds;
+
+            // 吹っ飛び処理
+            Vector3 hitpos = col.ClosestPoint(transform.position);
+            Vector3 addVec = transform.position - hitpos;
+            Vector3 add = addVec.normalized * blowOffAdd;
+            rb.velocity = Vector2.zero;
+            rb.AddForce(add, ForceMode2D.Impulse);
+
+            // 吸い寄せ中のアイテムがあったら解除
+            for (int i=0; i<eatingCount;i++)
+            {
+                eatingObjects[i].ReleaseEat();
+            }
+            eatingCount = 0;
+            anim.SetBool("Inhole", false);
         }
 
         public void AdjustLeftPosition()

@@ -46,6 +46,17 @@ namespace HungraviyEx2019
         /// </summary>
         public const int LifeMax = 3;
 
+#if UNITY_EDITOR
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                Life = LifeMax;
+            }
+        }
+#endif
+
+
         /// <summary>
         /// 新しくゲームを開始する時の初期化処理
         /// </summary>
@@ -53,6 +64,16 @@ namespace HungraviyEx2019
         {
             Life = LifeMax;
             Stage = 0;
+        }
+
+        /// <summary>
+        /// ライフを減らします。ゲームオーバーの状態になったらtrueを返します。
+        /// </summary>
+        /// <returns>ゲームオーバーならtrue</returns>
+        public static bool LifeDecrement()
+        {
+            Life = Life > 0  ? Life-1 : 0;
+            return Life == 0;
         }
     }
 }
