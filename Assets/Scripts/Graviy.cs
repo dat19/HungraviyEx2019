@@ -12,9 +12,9 @@ namespace HungraviyEx2019 {
         [Tooltip("ブラックホール発生時に、エネルギーを減らす秒速"), SerializeField]
         float energySubBlackhole = -0.3f;
         [Tooltip("着地時のエネルギーが回復秒速"), SerializeField]
-        float energyRecoveryOnGround = 0.3f;
+        float energyRecoveryOnGround = 0.4f;
         [Tooltip("空中のエネルギー回復秒速"), SerializeField]
-        float energyRecoveryInTheAir = 0.1f;
+        float energyRecoveryInTheAir = 0.2f;
         [Tooltip("食べ物を食べた時に回復するエネルギー量"), SerializeField]
         float energyFood = 0.5f;
         [Tooltip("はらぺこ切り替えエネルギー"), SerializeField]
@@ -84,7 +84,8 @@ namespace HungraviyEx2019 {
         {
             get
             {
-                return !Fade.IsFading;
+                return !Fade.IsFading
+                    && GameManager.state == GameManager.StateType.Game;
             }
         }
 
@@ -119,7 +120,10 @@ namespace HungraviyEx2019 {
         {
             if (!CanMove)
             {
-                rb.velocity = Vector2.zero;
+                if (GameManager.state == GameManager.StateType.Game)
+                {
+                    rb.velocity = Vector2.zero;
+                }
                 return;
             }
 
@@ -230,13 +234,6 @@ namespace HungraviyEx2019 {
         {
             if (mutekiTime >= 0) { return; }
 
-            // ゲームオーバーチェック
-            if (GameParams.LifeDecrement())
-            {
-                Debug.Log($"ゲームオーバーへ");
-                return;
-            }
-
             // 無敵時間設定
             mutekiTime = mutekiSeconds;
 
@@ -248,12 +245,19 @@ namespace HungraviyEx2019 {
             rb.AddForce(add, ForceMode2D.Impulse);
 
             // 吸い寄せ中のアイテムがあったら解除
-            for (int i=0; i<eatingCount;i++)
+            for (int i = 0; i < eatingCount; i++)
             {
                 eatingObjects[i].ReleaseEat();
             }
             eatingCount = 0;
             anim.SetBool("Inhole", false);
+
+            // ゲームオーバーチェック
+            if (GameParams.LifeDecrement())
+            {
+                GameManager.GameOver();
+                return;
+            }
         }
 
         public void AdjustLeftPosition()
@@ -292,7 +296,6 @@ namespace HungraviyEx2019 {
                 }
             }
             eatingCount--;
-            Debug.Log($"  eatingCount={eatingCount}");
 
             // 全て食べていたら、口を閉じる
             if (eatingCount <= 0)

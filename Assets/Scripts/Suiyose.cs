@@ -31,7 +31,6 @@ namespace HungraviyEx2019
         {
             if (!Graviy.CanMove)
             {
-                rb.velocity = Vector2.zero;
                 return;
             }
 

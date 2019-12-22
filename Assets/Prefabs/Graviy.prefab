@@ -145,8 +145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityScale: 1
   energySubBlackhole: -0.3
-  energyRecoveryOnGround: 0.3
-  energyRecoveryInTheAir: 0.1
+  energyRecoveryOnGround: 0.4
+  energyRecoveryInTheAir: 0.2
   energyFood: 0.5
   hungryAnim: 0.33
   eatItemSeconds: 0.5

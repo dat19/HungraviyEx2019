@@ -11,13 +11,18 @@ namespace HungraviyEx2019
     public class GameParams : Singleton<GameParams>
     {
         /// <summary>
+        /// 全ステージ数
+        /// </summary>
+        public const int StageMax = 3;
+
+        /// <summary>
         /// 操作可能な時、trueを返します。
         /// </summary>
         public static bool CanMove
         {
             get
             {
-                return SceneChanger.IsBooting
+                return !SceneChanger.IsBooting
                     && !SceneChanger.IsChanging
                     && !Fade.IsFading;
             }
@@ -74,6 +79,16 @@ namespace HungraviyEx2019
         {
             Life = Life > 0  ? Life-1 : 0;
             return Life == 0;
+        }
+
+        /// <summary>
+        /// 次のステージへ。エンディングにする場合、trueを返します。
+        /// </summary>
+        /// <returns>true=エンディングへ</returns>
+        public static bool NextStage()
+        {
+            Stage++;
+            return (Stage >= StageMax);
         }
     }
 }

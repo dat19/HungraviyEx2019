@@ -11,14 +11,6 @@ namespace HungraviyEx2019
         [Tooltip("最高速度"), SerializeField]
         float speedMax = 10f;
 
-        public static bool CanMove
-        {
-            get
-            {
-                return !Fade.IsFading;
-            }
-        }
-
         /// <summary>
         /// エネルギーがあって、マウスをクリックしている時、true
         /// </summary>
@@ -46,7 +38,11 @@ namespace HungraviyEx2019
 
         private void FixedUpdate()
         {
-            if (!CanMove) return;
+            if (!Graviy.CanMove)
+            {
+                anim.SetBool("Spawn", false);
+                return;
+            }
 
             bool mouseClicked = Input.GetMouseButton(0);
             IsSpawn = (mouseClicked && (Graviy.Energy > 0));
