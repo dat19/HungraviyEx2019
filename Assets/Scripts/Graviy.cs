@@ -199,16 +199,24 @@ namespace HungraviyEx2019 {
                 eatingObjects[eatingCount].Eat(eatItemSeconds, eatItemMinSeconds);
                 eatingCount++;
 
-                if (!isEating)
-                {
-                    isEating = true;
-                    anim.SetBool("Inhole", true);
-                    anim.SetFloat("EatSpeed", 1);
-                }
+                StartEat();
             }
             else if (collision.collider.CompareTag("Enemy"))
             {
                 Miss(collision.collider);
+            }
+        }
+
+        /// <summary>
+        /// 食べるアニメ開始
+        /// </summary>
+        public void StartEat()
+        {
+            if (!isEating)
+            {
+                isEating = true;
+                anim.SetBool("Inhole", true);
+                anim.SetFloat("EatSpeed", 1);
             }
         }
 
@@ -223,11 +231,26 @@ namespace HungraviyEx2019 {
             {
                 Miss(collision);
             }
+            else if (collision.CompareTag("Clear"))
+            {
+                Clear(collision);
+            }
         }
 
         private void OnTriggerStay2D(Collider2D collision)
         {
             OnTriggerEnter2D(collision);            
+        }
+
+        /// <summary>
+        /// クリア演出を開始
+        /// </summary>
+        void Clear(Collider2D collision)
+        {
+            if (GameManager.state != GameManager.StateType.Game) return;
+
+            GameManager.state = GameManager.StateType.Clear;
+            collision.GetComponent<ClearObject>().Inhale();
         }
 
         void Miss(Collider2D col)
@@ -302,6 +325,14 @@ namespace HungraviyEx2019 {
             {
                 anim.SetFloat("EatSpeed", -1);
             }
+        }
+
+        /// <summary>
+        /// 口を閉じる
+        /// </summary>
+        public void CloseMouth()
+        {
+            anim.SetFloat("EatSpeed", -1);
         }
     }
 }
