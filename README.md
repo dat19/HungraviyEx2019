@@ -14,3 +14,4 @@
 - [敵がブラックホールに吸い込まれる](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/EnemyInBlackhole.md)
 - [エネルギー](https://github.com/dat19/HungraviyEx2019/blob/master/Documents/Energy.md)
 - [ゲームオーバー](Documents/GameOver.md)
+- [クリア](Documents/Clear.md)
