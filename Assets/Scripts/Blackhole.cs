@@ -28,6 +28,15 @@ namespace HungraviyEx2019
         /// </summary>
         bool animSpawn;
 
+        /// <summary>
+        /// クリア中の発生時、true。ぐらびぃの口からclearOffsetを加えた座標に発生させる。
+        /// </summary>
+        bool isClear;
+        /// <summary>
+        /// クリア時のぐらびぃからのオフセット座標
+        /// </summary>
+        Vector3 clearOffset;
+
         private void Awake()
         {
             instance = this;
@@ -36,14 +45,44 @@ namespace HungraviyEx2019
             animSpawn = false;
         }
 
+        /// <summary>
+        /// クリア処理開始
+        /// </summary>
+        /// <param name="ofs"></param>
+        public void ClearStart(Vector3 ofs)
+        {
+            clearOffset = ofs;
+            isClear = true;
+            IsSpawn = false;
+            anim.SetBool("Spawn", true);
+        }
+
+        public void ClearDone()
+        {
+            isClear = false;
+            anim.SetBool("Spawn", false);
+        }
+
         private void FixedUpdate()
         {
-            if (!Graviy.CanMove)
+            if (!isClear && !Graviy.CanMove)
             {
                 anim.SetBool("Spawn", false);
                 return;
             }
 
+            Vector3 target = Graviy.MouthPosition + clearOffset;
+            if (!isClear)
+            {
+                target = GetTargetWithControl();
+            }
+            Vector3 move = (target - transform.position) / Time.fixedDeltaTime;
+            move = Vector3.ClampMagnitude(move, speedMax);
+            rb.velocity = move;
+        }
+
+        Vector3 GetTargetWithControl()
+        {
             bool mouseClicked = Input.GetMouseButton(0);
             IsSpawn = (mouseClicked && (Graviy.Energy > 0));
             anim.SetBool("Spawn", IsSpawn);
@@ -52,7 +91,7 @@ namespace HungraviyEx2019
             if (!animSpawn)
             {
                 lastSpawned = false;
-                return;
+                return transform.position; 
             }
 
             // 動かす
@@ -69,12 +108,10 @@ namespace HungraviyEx2019
                 transform.position = target;
                 rb.velocity = Vector3.zero;
                 lastSpawned = true;
-                return;
+                return transform.position;
             }
 
-            Vector3 move = (target - transform.position) / Time.fixedDeltaTime;
-            move = Vector3.ClampMagnitude(move, speedMax);
-            rb.velocity = move;
+            return target;
         }
 
         /// <summary>

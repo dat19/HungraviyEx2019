@@ -85,6 +85,7 @@ namespace HungraviyEx2019 {
             get
             {
                 return !Fade.IsFading
+                    && !SceneChanger.IsChanging
                     && GameManager.state == GameManager.StateType.Game;
             }
         }

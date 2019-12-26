@@ -40,7 +40,7 @@ namespace HungraviyEx2019
 
         IEnumerator InhaleCoroutine()
         {
-            Debug.Log($"Blackholeに発生場所を指示");
+            Blackhole.instance.ClearStart(targetOffset);
 
             anim.SetInteger("State", (int)AnimType.Inhale);
             float time = 0f;
@@ -55,7 +55,7 @@ namespace HungraviyEx2019
                 yield return wait;
             }
 
-            Debug.Log($"ブラックホールを消す");
+            Blackhole.instance.ClearDone();
             Graviy.instance.StartEat();
 
             // 落下
@@ -78,7 +78,8 @@ namespace HungraviyEx2019
 
             // 口を閉じる
             Graviy.instance.CloseMouth();
-            Debug.Log($"クリック待ち表示");
+
+            GameManager.Clear();
 
             // クリック待ち
         }
