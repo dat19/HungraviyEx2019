@@ -167,16 +167,6 @@ namespace HungraviyEx2019 {
             // はらぺこアニメ切り替えチェック
             anim.SetLayerWeight(1, Energy < hungryAnim ? 1 : 0);
 
-            // 食べ終わりチェック
-            if (isEating && anim.GetFloat("EatSpeed") < 0)
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0)
-                {
-                    anim.SetBool("Inhole", false);
-                    isEating = false;
-                }
-            }
-
             // 無敵処理
             mutekiTime -= Time.fixedDeltaTime;
             anim.SetFloat("MutekiTime", mutekiTime);
@@ -215,8 +205,7 @@ namespace HungraviyEx2019 {
             if (!isEating)
             {
                 isEating = true;
-                anim.SetBool("Inhole", true);
-                anim.SetFloat("EatSpeed", 1);
+                anim.SetBool("Inhale", true);
             }
         }
 
@@ -273,7 +262,8 @@ namespace HungraviyEx2019 {
                 eatingObjects[i].ReleaseEat();
             }
             eatingCount = 0;
-            anim.SetBool("Inhole", false);
+            anim.SetBool("Inhale", false);
+            isEating = false;
 
             // ゲームオーバーチェック
             if (GameParams.LifeDecrement())
@@ -323,7 +313,11 @@ namespace HungraviyEx2019 {
             // 全て食べていたら、口を閉じる
             if (eatingCount <= 0)
             {
-                anim.SetFloat("EatSpeed", -1);
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+                {
+                    isEating = false;
+                    CloseMouth();
+                }
             }
         }
 
@@ -332,7 +326,7 @@ namespace HungraviyEx2019 {
         /// </summary>
         public void CloseMouth()
         {
-            anim.SetFloat("EatSpeed", -1);
+            anim.SetBool("Inhale", false);
         }
     }
 }
