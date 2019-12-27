@@ -12,6 +12,8 @@ namespace HungraviyEx2019
         Animator clearAnimator = null;
         [Tooltip("ゲームオーバー用アニメ"), SerializeField]
         Animator gameOverAnimator = null;
+        [Tooltip("クリックアニメ"), SerializeField]
+        Animator clickAnimator = null;
         [Tooltip("シーン切り替えから、シーンを切り替えられるようになるまでの待ち時間"), SerializeField]
         float nextSceneWait = 1f;
 
@@ -48,16 +50,24 @@ namespace HungraviyEx2019
                 || (Time.time - waitStartTime < nextSceneWait))
                 return;
 
-            if (Input.GetMouseButtonDown(0))
+            if (state == StateType.GameOver)
             {
-                if (state == StateType.GameOver)
+                instance.clickAnimator.SetBool("Show", true);
+
+                if (Input.GetMouseButtonDown(0))
                 {
+                    instance.clickAnimator.SetBool("Show", false);
                     SoundController.Play(SoundController.SeType.Click);
                     SceneChanger.ChangeScene(SceneChanger.SceneType.Title);
+                    state = StateType.NextScene;
                 }
-                else if (ClearObject.CanNext)
+            }
+            else if (state == StateType.Clear && ClearObject.CanNext)
+            {
+                if (Input.GetMouseButtonDown(0))
                 {
                     SoundController.Play(SoundController.SeType.Click);
+                    instance.clickAnimator.SetBool("Show", false);
 
                     // ステージクリア
                     if (GameParams.NextStage())
@@ -68,8 +78,8 @@ namespace HungraviyEx2019
                     {
                         SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
                     }
+                    state = StateType.NextScene;
                 }
-                state = StateType.NextScene;
             }
         }
 
@@ -87,6 +97,10 @@ namespace HungraviyEx2019
             waitStartTime = Time.time;
         }
 
+        public static void ShowClick()
+        {
+            instance.clickAnimator.SetBool("Show", true);
+        }
 
     }
 }

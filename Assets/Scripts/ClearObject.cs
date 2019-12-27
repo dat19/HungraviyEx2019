@@ -22,6 +22,11 @@ namespace HungraviyEx2019
         }
 
         /// <summary>
+        /// クリック表示までの秒数
+        /// </summary>
+        const float WaitClick = 0.5f;
+
+        /// <summary>
         /// 次のステージやエンディングに進んでよい時、trueを返します。
         /// </summary>
         public static bool CanNext { get;private set; }
@@ -82,11 +87,13 @@ namespace HungraviyEx2019
                 yield return wait;
             }
 
-            // 口を閉じる
+            // 口を閉じてクリア表示
             Graviy.instance.CloseMouth();
-
             GameManager.Clear();
 
+            yield return new WaitForSeconds(WaitClick);
+
+            GameManager.ShowClick();
             CanNext = true;
         }
     }
