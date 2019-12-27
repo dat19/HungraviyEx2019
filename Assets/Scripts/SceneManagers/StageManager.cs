@@ -7,8 +7,12 @@ namespace HungraviyEx2019
 {
     public class StageManager : SceneManagerBase
     {
+        [Tooltip("ステージ時間"), SerializeField]
+        float stageTime = 99.99f;
+
         public override void OnFadeOutDone()
         {
+            GameParams.SetStartTime(stageTime);
             SceneManager.SetActiveScene(gameObject.scene);
         }
     }

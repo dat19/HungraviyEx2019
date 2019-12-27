@@ -6,6 +6,9 @@ namespace HungraviyEx2019
 {
     public class Item : MonoBehaviour
     {
+        [Tooltip("得点"), SerializeField]
+        int point = 100;
+
         bool isEating = false;
         float eatStartTime = 0;
         float eatTime;
@@ -39,6 +42,7 @@ namespace HungraviyEx2019
             {
                 // 食べる
                 Graviy.instance.EatDone(this);
+                GameParams.AddScore(point);
                 Destroy(gameObject);
                 return;
             }

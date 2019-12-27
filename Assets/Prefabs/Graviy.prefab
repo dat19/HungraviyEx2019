@@ -153,6 +153,7 @@ MonoBehaviour:
   eatItemMinSeconds: 0.3
   mutekiSeconds: 2
   blowOffAdd: 15
+  gameOverGravityScale: 0.1
 --- !u!50 &7292923159428045308
 Rigidbody2D:
   serializedVersion: 4

@@ -14,6 +14,8 @@ namespace HungraviyEx2019
         Animator gameOverAnimator = null;
         [Tooltip("クリックアニメ"), SerializeField]
         Animator clickAnimator = null;
+        [Tooltip("ハイスコアアニメ"), SerializeField]
+        Animator highScoreAnimator = null;
         [Tooltip("シーン切り替えから、シーンを切り替えられるようになるまでの待ち時間"), SerializeField]
         float nextSceneWait = 1f;
 
@@ -52,7 +54,14 @@ namespace HungraviyEx2019
 
             if (state == StateType.GameOver)
             {
-                instance.clickAnimator.SetBool("Show", true);
+                if (!instance.clickAnimator.GetBool("Show"))
+                {
+                    instance.clickAnimator.SetBool("Show", true);
+                    if (GameParams.CheckHighScore())
+                    {
+                        instance.highScoreAnimator.SetTrigger("Show");
+                    }
+                }
 
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -101,6 +110,5 @@ namespace HungraviyEx2019
         {
             instance.clickAnimator.SetBool("Show", true);
         }
-
     }
 }

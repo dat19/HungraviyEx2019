@@ -15,6 +15,8 @@ namespace HungraviyEx2019
         float footCheckDistance = 0.2f;
         [Tooltip("歩き速度とアニメの係数"), SerializeField]
         float velocityToAnimSpeed = 0.75f;
+        [Tooltip("点数"), SerializeField]
+        int point = 100;
         [Tooltip("出現させるスイーツ"), SerializeField]
         GameObject sweets = null;
 
@@ -129,6 +131,7 @@ namespace HungraviyEx2019
                     {
                         // 吸い込まれが完了した
                         ToSweets();
+                        GameParams.AddScore(point);
                         Destroy(gameObject);
                     }
                     else if (st == EnemyInBlackhole.StateType.None)

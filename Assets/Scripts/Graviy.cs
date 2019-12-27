@@ -27,12 +27,15 @@ namespace HungraviyEx2019 {
         float mutekiSeconds = 2f;
         [Tooltip("ふっとばす時の加速"), SerializeField]
         float blowOffAdd = 15f;
+        [Tooltip("ゲームオーバー時の重力スケール"), SerializeField]
+        float gameOverGravityScale = 0.5f;
 
         public enum AnimType
         {
-            Idle,
-            Sucked,
-            Fall,
+            Idle,   // 0
+            Sucked, // 1
+            Fall,   // 2
+            Dead,   // 3
         }
 
         /// <summary>
@@ -76,6 +79,7 @@ namespace HungraviyEx2019 {
         static Item[] eatingObjects = new Item[EatingMax];
         static Vector3 mouthOffsetLeft = Vector3.zero;
         static Vector3 mouthOffsetRight = Vector3.zero;
+        static int gameOverLayer;
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -110,6 +114,7 @@ namespace HungraviyEx2019 {
             eatingCount = 0;
             mouthOffsetRight = transform.Find("MouthPosition").transform.localPosition;
             mouthOffsetLeft.Set(-mouthOffsetRight.x, mouthOffsetRight.y, 0);
+            gameOverLayer = LayerMask.NameToLayer("GameOverPlayer");
         }
 
         private void Start()
@@ -269,6 +274,9 @@ namespace HungraviyEx2019 {
             // ゲームオーバーチェック
             if (GameParams.LifeDecrement())
             {
+                anim.SetInteger("State", (int)AnimType.Dead);
+                gameObject.layer = gameOverLayer;
+                rb.gravityScale = gameOverGravityScale;
                 GameManager.GameOver();
                 return;
             }

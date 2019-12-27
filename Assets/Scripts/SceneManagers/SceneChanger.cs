@@ -199,6 +199,7 @@ namespace HungraviyEx2019
             {
                 unloadSceneOperations[unloadSceneCount] = SceneManager.UnloadSceneAsync(loadedStageName);
                 unloadSceneCount++;
+                loadedStageName = "";
             }
 
             // シーン切り替え

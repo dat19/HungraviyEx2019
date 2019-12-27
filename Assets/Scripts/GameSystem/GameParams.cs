@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace HungraviyEx2019
 {
@@ -14,6 +15,21 @@ namespace HungraviyEx2019
         /// 全ステージ数
         /// </summary>
         public const int StageMax = 3;
+
+        /// <summary>
+        /// ライフの上限数
+        /// </summary>
+        public const int LifeMax = 3;
+
+        /// <summary>
+        /// スコア上限
+        /// </summary>
+        public const int ScoreMax = 999999;
+
+        /// <summary>
+        /// ハイスコアを記録
+        /// </summary>
+        static bool isHighScore = false;
 
         /// <summary>
         /// 操作可能な時、trueを返します。
@@ -47,9 +63,26 @@ namespace HungraviyEx2019
         }
 
         /// <summary>
-        /// ライフの上限数
+        /// 現在のスコア
         /// </summary>
-        public const int LifeMax = 3;
+        public static int Score { get; private set; }
+
+        /// <summary>
+        /// 起動してからのハイスコア
+        /// </summary>
+        public static int HighScore { get; private set; }
+
+        /// <summary>
+        /// プレイタイム
+        /// </summary>
+        public static float PlayTime { get; private set; }
+
+        private void Awake()
+        {
+            Score = 0;
+            HighScore = 0;
+            PlayTime = 0;
+        }
 
 #if UNITY_EDITOR
         private void Update()
@@ -61,6 +94,13 @@ namespace HungraviyEx2019
         }
 #endif
 
+        private void FixedUpdate()
+        {
+            if (Graviy.CanMove)
+            {
+                PlayTime -= Time.fixedDeltaTime;
+            }
+        }
 
         /// <summary>
         /// 新しくゲームを開始する時の初期化処理
@@ -69,6 +109,8 @@ namespace HungraviyEx2019
         {
             Life = LifeMax;
             Stage = 0;
+            Score = 0;
+            isHighScore = false;
         }
 
         /// <summary>
@@ -90,5 +132,44 @@ namespace HungraviyEx2019
             Stage++;
             return (Stage >= StageMax);
         }
+
+        #region Private Methods
+
+        /// <summary>
+        /// 加算する得点
+        /// </summary>
+        /// <param name="add">得点</param1>
+        public static void AddScore(int add)
+        {
+            Score = Mathf.Min(Score + add, ScoreMax);
+        }
+
+        /// <summary>
+        /// ステージの持ち時間を設定
+        /// </summary>
+        /// <param name="tm"></param>
+        public static void SetStartTime(float tm)
+        {
+            PlayTime = tm;
+        }
+
+        /// <summary>
+        /// ハイスコアを記録したかを確認
+        /// </summary>
+        /// <returns></returns>
+        public static bool CheckHighScore()
+        {
+            isHighScore = false;
+            if (Score > HighScore)
+            {
+                HighScore = Score;
+                isHighScore = true;
+            }
+
+            return isHighScore;
+        }
+
+        #endregion Private Methods
+
     }
 }
