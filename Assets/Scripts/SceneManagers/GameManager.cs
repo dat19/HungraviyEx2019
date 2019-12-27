@@ -38,6 +38,7 @@ namespace HungraviyEx2019
             instance = this;
             state = StateType.Game;
             base.Awake();
+            waitStartTime = Time.time;
         }
 
         private void Update()
@@ -49,13 +50,15 @@ namespace HungraviyEx2019
 
             if (Input.GetMouseButtonDown(0))
             {
-                SoundController.Play(SoundController.SeType.Click);
                 if (state == StateType.GameOver)
                 {
+                    SoundController.Play(SoundController.SeType.Click);
                     SceneChanger.ChangeScene(SceneChanger.SceneType.Title);
                 }
-                else
+                else if (ClearObject.CanNext)
                 {
+                    SoundController.Play(SoundController.SeType.Click);
+
                     // ステージクリア
                     if (GameParams.NextStage())
                     {

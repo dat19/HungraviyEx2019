@@ -21,6 +21,11 @@ namespace HungraviyEx2019
             Gulp
         }
 
+        /// <summary>
+        /// 次のステージやエンディングに進んでよい時、trueを返します。
+        /// </summary>
+        public static bool CanNext { get;private set; }
+
         Animator anim;
 
         private void Awake()
@@ -35,6 +40,7 @@ namespace HungraviyEx2019
 
         public void Inhale()
         {
+            CanNext = false;
             StartCoroutine(InhaleCoroutine());
         }
 
@@ -81,7 +87,7 @@ namespace HungraviyEx2019
 
             GameManager.Clear();
 
-            // クリック待ち
+            CanNext = true;
         }
     }
 }
