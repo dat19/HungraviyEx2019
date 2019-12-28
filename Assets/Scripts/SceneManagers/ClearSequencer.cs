@@ -23,6 +23,11 @@ namespace HungraviyEx2019
         public static void Start(ClearObject clearObject)
         {
             CanNext = false;
+
+            // 残り時間をボーナス点にまるめこむ
+            int leftTime = Mathf.FloorToInt(GameParams.playTime * GameParams.TimeBonus);
+            GameParams.playTime = ((float)leftTime / GameParams.TimeBonus) + (0.1f / GameParams.TimeBonus);
+
             GameManager.instance.StartCoroutine(ClearCoroutine(clearObject));
         }
 
@@ -56,8 +61,6 @@ namespace HungraviyEx2019
             int bonus = 0;
             GameManager.instance.TimeBonusText($"{TimeBonusPrefix}{bonus,5}</mspace>");
             int leftTime = Mathf.FloorToInt(GameParams.playTime * GameParams.TimeBonus);
-            GameParams.playTime = ((float)leftTime / GameParams.TimeBonus) + (0.1f / GameParams.TimeBonus);
-            Debug.Log($"leftTIme={leftTime}");
 
             yield return waitNext;
 
