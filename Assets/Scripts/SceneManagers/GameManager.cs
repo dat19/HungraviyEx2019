@@ -19,6 +19,8 @@ namespace HungraviyEx2019
         Animator highScoreAnimator = null;
         [Tooltip("タイムボーナステキスト"), SerializeField]
         TextMeshProUGUI timeBonusText = null;
+        [Tooltip("ライフボーナステキスト"), SerializeField]
+        TextMeshProUGUI lifeBonusText = null;
         [Tooltip("パーフェクトボーナステキスト"), SerializeField]
         TextMeshProUGUI perfectBonusText = null;
         [Tooltip("シーン切り替えから、シーンを切り替えられるようになるまでの待ち時間"), SerializeField]
@@ -128,6 +130,30 @@ namespace HungraviyEx2019
                 timeBonusText.gameObject.SetActive(true);
             }
             timeBonusText.text = text;
+        }
+
+        /// <summary>
+        /// ライフボーナス表示
+        /// </summary>
+        /// <param name="text"></param>
+        public void LifeBonusText(string text)
+        {
+            if (!lifeBonusText.gameObject.activeSelf)
+            {
+                lifeBonusText.gameObject.SetActive(true);
+            }
+            lifeBonusText.text = text;
+        }
+
+        /// <summary>
+        /// パーフェクトボーナス表示
+        /// </summary>
+        public void PerfectBonusText()
+        {
+            if (!perfectBonusText.gameObject.activeSelf)
+            {
+                perfectBonusText.gameObject.SetActive(true);
+            }
         }
 
         public static void GameOver()

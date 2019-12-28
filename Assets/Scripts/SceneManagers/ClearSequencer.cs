@@ -16,9 +16,21 @@ namespace HungraviyEx2019
         /// </summary>
         const float WaitNext = 1f;
 
+        /// <summary>
+        /// ライフボーナスの待ち時間
+        /// </summary>
+        const float WaitLife = 0.25f;
+
+        /// <summary>
+        /// ライフボーナス
+        /// </summary>
+        const int LifeBonusPoint = 1000;
+
         const string TimeBonusPrefix = "タイムボーナス <mspace=0.7em>";
+        const string LifeBonusPrefix = "ライフボーナス <mspace=0.7em>";
         static readonly WaitForFixedUpdate waitFixed = new WaitForFixedUpdate();
         static readonly WaitForSeconds waitNext = new WaitForSeconds(WaitNext);
+        static readonly WaitForSeconds waitLife = new WaitForSeconds(WaitLife);
 
         public static void Start(ClearObject clearObject)
         {
@@ -52,8 +64,26 @@ namespace HungraviyEx2019
             // タイムボーナス
             yield return TimeBonus();
 
+            // ライフボーナス
+            yield return LifeBonus();
+
             GameManager.ShowClick();
             CanNext = true;
+        }
+
+        static IEnumerator LifeBonus()
+        {
+            int bonus = 0;
+            GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
+
+            while (GameParams.Life > 0)
+            {
+                yield return waitLife;
+
+                bonus += LifeBonusPoint;
+                GameParams.LifeDecrement();
+                GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
+            }
         }
 
         static IEnumerator TimeBonus()
