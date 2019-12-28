@@ -47,7 +47,12 @@ namespace HungraviyEx2019
         /// <summary>
         /// ステージのアイテム数
         /// </summary>
-        public static int ItemLeft { get; private set; }
+        public static int ItemCount { get; private set; }
+
+        /// <summary>
+        /// 取得したアイテムの個数
+        /// </summary>
+        public static int GetItem { get; private set; }
 
         private new void Awake()
         {
@@ -55,7 +60,8 @@ namespace HungraviyEx2019
             state = StateType.Game;
             base.Awake();
             waitStartTime = Time.time;
-            ItemLeft = 0;
+            ItemCount = 0;
+            GetItem = 0;
         }
 
         private void Update()
@@ -131,11 +137,7 @@ namespace HungraviyEx2019
         /// <param name="text"></param>
         public void TimeBonusText(string text)
         {
-            if (!timeBonusText.gameObject.activeSelf)
-            {
-                timeBonusText.gameObject.SetActive(true);
-            }
-            timeBonusText.text = text;
+            SetText(timeBonusText, text);
         }
 
         /// <summary>
@@ -144,23 +146,26 @@ namespace HungraviyEx2019
         /// <param name="text"></param>
         public void LifeBonusText(string text)
         {
-            if (!lifeBonusText.gameObject.activeSelf)
-            {
-                lifeBonusText.gameObject.SetActive(true);
-            }
-            lifeBonusText.text = text;
+            SetText(lifeBonusText, text);
         }
 
         /// <summary>
         /// パーフェクトボーナス表示
         /// </summary>
-        public void PerfectBonusText()
+        public void PerfectBonusText(string text)
         {
-            if (!perfectBonusText.gameObject.activeSelf)
-            {
-                perfectBonusText.gameObject.SetActive(true);
-            }
+            SetText(perfectBonusText, text);
         }
+
+        void SetText(TextMeshProUGUI tmp, string text)
+        {
+            if (!tmp.gameObject.activeSelf)
+            {
+                tmp.gameObject.SetActive(true);
+            }
+            tmp.text = text;
+        }
+
 
         public static void GameOver()
         {
@@ -179,17 +184,25 @@ namespace HungraviyEx2019
         /// <summary>
         /// アイテムやアイテムを持っている敵のStartから呼び出します。
         /// </summary>
-        public static void AddItemLeft()
+        public static void AddItemCount()
         {
-            ItemLeft++;
+            ItemCount++;
+        }
+
+        /// <summary>
+        /// 敵が発生させる時には多重カウントになるので、これを呼び出して戻す。
+        /// </summary>
+        public static void DecrementItemCount()
+        {
+            ItemCount--;
         }
 
         /// <summary>
         /// アイテムを取った時に呼び出します。
         /// </summary>
-        public static void DecrementItemLeft()
+        public static void GetItemCount()
         {
-            ItemLeft--;
+            GetItem++;
         }
     }
 }

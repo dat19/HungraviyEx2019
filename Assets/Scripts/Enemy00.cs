@@ -82,7 +82,7 @@ namespace HungraviyEx2019
         {
             if (sweets != null)
             {
-                GameManager.AddItemLeft();
+                GameManager.AddItemCount();
             }
         }
 
@@ -196,7 +196,11 @@ namespace HungraviyEx2019
         /// </summary>
         void ToSweets()
         {
-            Instantiate(sweets, transform.position, Quaternion.identity);
+            if (sweets != null)
+            {
+                GameManager.DecrementItemCount();
+                Instantiate(sweets, transform.position, Quaternion.identity);
+            }
         }
     }
 }

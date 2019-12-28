@@ -31,7 +31,7 @@ namespace HungraviyEx2019
 
         private void Start()
         {
-            GameManager.AddItemLeft();
+            GameManager.AddItemCount();
         }
 
         private void FixedUpdate()

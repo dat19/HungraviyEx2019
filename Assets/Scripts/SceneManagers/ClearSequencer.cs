@@ -26,8 +26,15 @@ namespace HungraviyEx2019
         /// </summary>
         const int LifeBonusPoint = 1000;
 
+        /// <summary>
+        /// パーフェクトの得点
+        /// </summary>
+        const int PerfectPoint = 5000;
+
         const string TimeBonusPrefix = "タイムボーナス <mspace=0.7em>";
         const string LifeBonusPrefix = "ライフボーナス <mspace=0.7em>";
+        readonly static string PerfectBonusMessage = $"パーフェクト!!  <mspace=0.7em>{PerfectPoint}</mspace>";
+        const string Kosu = "<size=40>";
         static readonly WaitForFixedUpdate waitFixed = new WaitForFixedUpdate();
         static readonly WaitForSeconds waitNext = new WaitForSeconds(WaitNext);
         static readonly WaitForSeconds waitLife = new WaitForSeconds(WaitLife);
@@ -70,7 +77,17 @@ namespace HungraviyEx2019
             yield return WaitNext;
 
             // アイテムパーフェクトボーナス
+            if (GameManager.GetItem >= GameManager.ItemCount)
+            {
+                GameManager.instance.PerfectBonusText(PerfectBonusMessage);
+                GameParams.AddScore(PerfectPoint);
+            }
+            else
+            {
+                GameManager.instance.PerfectBonusText($"{GameManager.ItemCount}{Kosu}コ</size>中{GameManager.GetItem}{Kosu}コ</size>ゲット。{GameManager.ItemCount - GameManager.GetItem}{Kosu}コ</size>とりのがし...");
+            }
 
+            yield return WaitNext;
 
             GameManager.ShowClick();
             CanNext = true;
@@ -86,6 +103,7 @@ namespace HungraviyEx2019
                 yield return waitLife;
 
                 bonus += LifeBonusPoint;
+                GameParams.AddScore(LifeBonusPoint);
                 GameParams.LifeDecrement();
                 GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
             }
@@ -107,6 +125,7 @@ namespace HungraviyEx2019
                 for (int i = 0; i < count; i++)
                 {
                     bonus += keta;
+                    GameParams.AddScore(keta);
                     leftTime -= keta;
 
                     GameManager.instance.TimeBonusText($"{TimeBonusPrefix}{bonus,5}</mspace>");
