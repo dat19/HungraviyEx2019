@@ -14,12 +14,12 @@ namespace HungraviyEx2019
         /// <summary>
         /// 次の動作までの待ち時間
         /// </summary>
-        const float WaitNext = 1f;
+        const float WaitNextSeconds = 1f;
 
         /// <summary>
         /// ライフボーナスの待ち時間
         /// </summary>
-        const float WaitLife = 0.25f;
+        const float WaitLifeSeconds = 0.25f;
 
         /// <summary>
         /// ライフボーナス
@@ -33,11 +33,11 @@ namespace HungraviyEx2019
 
         const string TimeBonusPrefix = "タイムボーナス <mspace=0.7em>";
         const string LifeBonusPrefix = "ライフボーナス <mspace=0.7em>";
-        readonly static string PerfectBonusMessage = $"パーフェクト!!  <mspace=0.7em>{PerfectPoint}</mspace>";
+        readonly static string PerfectBonusMessage = $"パーフェクト!!      <mspace=0.7em>{PerfectPoint}</mspace>";
         const string Kosu = "<size=40>";
         static readonly WaitForFixedUpdate waitFixed = new WaitForFixedUpdate();
-        static readonly WaitForSeconds waitNext = new WaitForSeconds(WaitNext);
-        static readonly WaitForSeconds waitLife = new WaitForSeconds(WaitLife);
+        static readonly WaitForSeconds waitNext = new WaitForSeconds(WaitNextSeconds);
+        static readonly WaitForSeconds waitLife = new WaitForSeconds(WaitLifeSeconds);
 
         public static void Start(ClearObject clearObject)
         {
@@ -63,6 +63,7 @@ namespace HungraviyEx2019
             yield return clearObject.Fall();
 
             // 口を閉じてクリア表示
+            Graviy.AddEnergy(Graviy.EnergyMax);
             Graviy.instance.CloseMouth();
             GameManager.ShowClear();
 
@@ -70,11 +71,11 @@ namespace HungraviyEx2019
 
             // タイムボーナス
             yield return TimeBonus();
-            yield return WaitNext;
+            yield return waitNext;
 
             // ライフボーナス
             yield return LifeBonus();
-            yield return WaitNext;
+            yield return waitNext;
 
             // アイテムパーフェクトボーナス
             if (GameManager.GetItem >= GameManager.ItemCount)
@@ -87,7 +88,7 @@ namespace HungraviyEx2019
                 GameManager.instance.PerfectBonusText($"{GameManager.ItemCount}{Kosu}コ</size>中{GameManager.GetItem}{Kosu}コ</size>ゲット。{GameManager.ItemCount - GameManager.GetItem}{Kosu}コ</size>とりのがし...");
             }
 
-            yield return WaitNext;
+            yield return waitNext;
 
             GameManager.ShowClick();
             CanNext = true;
@@ -97,6 +98,8 @@ namespace HungraviyEx2019
         {
             int bonus = 0;
             GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
+
+            yield return waitNext;
 
             while (GameParams.Life > 0)
             {

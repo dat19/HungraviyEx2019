@@ -7,10 +7,6 @@ namespace HungraviyEx2019 {
     {
         public static Graviy instance = null;
 
-        [Tooltip("重力係数"), SerializeField]
-        float gravityScale = 1f;
-        [Tooltip("ブラックホール発生時に、エネルギーを減らす秒速"), SerializeField]
-        float energySubBlackhole = -0.3f;
         [Tooltip("着地時のエネルギーが回復秒速"), SerializeField]
         float energyRecoveryOnGround = 0.4f;
         [Tooltip("空中のエネルギー回復秒速"), SerializeField]
@@ -39,13 +35,18 @@ namespace HungraviyEx2019 {
         }
 
         /// <summary>
+        /// ブラックホール発生時に、エネルギーを減らす秒速
+        /// </summary>
+        const float EnergySubBlackhole = -0.3f;
+
+        /// <summary>
         /// エネルギーの最大値
         /// </summary>
         public const float EnergyMax = 1f;
         /// <summary>
         /// エネルギーの最小値
         /// </summary>
-        public const float EnergyMin = -0.1f;
+        public const float EnergyMin = EnergySubBlackhole * 0.04f;
 
         public static Vector3 MouthPosition
         {
@@ -95,7 +96,7 @@ namespace HungraviyEx2019 {
         }
 
         /// <summary>
-        /// 現在のエネルギー。0が空。1が満タン。
+        /// 現在のエネルギー。0以下が空。1が満タン。一旦離すまで回復しないように、2フレーム分マイナスにしておく
         /// </summary>
         public static float Energy { get; private set; }
 
@@ -152,30 +153,37 @@ namespace HungraviyEx2019 {
                 }
             }
 
-            if (Blackhole.IsSpawn)
+            if (Input.GetMouseButton(0))
             {
-                Energy += energySubBlackhole * Time.fixedDeltaTime;
+                AddEnergy(EnergySubBlackhole * Time.fixedDeltaTime);
             }
             else
             {
                 if (OnGroundChecker.Check(capsuleCollider2D))
                 {
-                    Energy += energyRecoveryOnGround * Time.fixedDeltaTime;
+                    AddEnergy(energyRecoveryOnGround * Time.fixedDeltaTime);
                 }
                 else
                 {
-                    Energy += energyRecoveryInTheAir * Time.fixedDeltaTime;
+                    AddEnergy(energyRecoveryInTheAir * Time.fixedDeltaTime);
                 }
             }
-
-            Energy = Mathf.Clamp(Energy, EnergyMin, EnergyMax);
-
-            // はらぺこアニメ切り替えチェック
-            anim.SetLayerWeight(1, Energy < hungryAnim ? 1 : 0);
 
             // 無敵処理
             mutekiTime -= Time.fixedDeltaTime;
             anim.SetFloat("MutekiTime", mutekiTime);
+        }
+
+        /// <summary>
+        /// エネルギー加算
+        /// </summary>
+        /// <param name="add">加算量</param>
+        public static void AddEnergy(float add)
+        {
+            Energy = Mathf.Clamp(Energy + add, EnergyMin, EnergyMax);
+
+            // はらぺこアニメ切り替えチェック
+            anim.SetLayerWeight(1, Energy < instance.hungryAnim ? 1 : 0);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
