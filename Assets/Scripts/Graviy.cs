@@ -194,6 +194,7 @@ namespace HungraviyEx2019 {
                 eatingObjects[eatingCount] = collision.collider.GetComponent<Item>();
                 eatingObjects[eatingCount].Eat(eatItemSeconds, eatItemMinSeconds);
                 eatingCount++;
+                Debug.Log($"add eatingCount={eatingCount}");
 
                 StartEat();
             }
@@ -316,16 +317,15 @@ namespace HungraviyEx2019 {
                     break;
                 }
             }
+            GameManager.DecrementItemLeft();
             eatingCount--;
+            Debug.Log($"eatingCount={eatingCount}");
 
             // 全て食べていたら、口を閉じる
             if (eatingCount <= 0)
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-                {
-                    isEating = false;
-                    CloseMouth();
-                }
+                isEating = false;
+                CloseMouth();
             }
         }
 

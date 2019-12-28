@@ -44,12 +44,18 @@ namespace HungraviyEx2019
         /// </summary>
         static float waitStartTime;
 
+        /// <summary>
+        /// ステージのアイテム数
+        /// </summary>
+        public static int ItemLeft { get; private set; }
+
         private new void Awake()
         {
             instance = this;
             state = StateType.Game;
             base.Awake();
             waitStartTime = Time.time;
+            ItemLeft = 0;
         }
 
         private void Update()
@@ -168,6 +174,22 @@ namespace HungraviyEx2019
         {
             instance.clickAnimator.gameObject.SetActive(true);
             instance.clickAnimator.SetBool("Show", true);
+        }
+
+        /// <summary>
+        /// アイテムやアイテムを持っている敵のStartから呼び出します。
+        /// </summary>
+        public static void AddItemLeft()
+        {
+            ItemLeft++;
+        }
+
+        /// <summary>
+        /// アイテムを取った時に呼び出します。
+        /// </summary>
+        public static void DecrementItemLeft()
+        {
+            ItemLeft--;
         }
     }
 }

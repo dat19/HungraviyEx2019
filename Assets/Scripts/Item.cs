@@ -29,6 +29,11 @@ namespace HungraviyEx2019
             isEating = false;
         }
 
+        private void Start()
+        {
+            GameManager.AddItemLeft();
+        }
+
         private void FixedUpdate()
         {
             if (!isEating) return;

@@ -78,6 +78,14 @@ namespace HungraviyEx2019
             enemyInBlackhole = GetComponentInChildren<EnemyInBlackhole>();
         }
 
+        private void Start()
+        {
+            if (sweets != null)
+            {
+                GameManager.AddItemLeft();
+            }
+        }
+
         private void FixedUpdate()
         {
             if (!CanMove)

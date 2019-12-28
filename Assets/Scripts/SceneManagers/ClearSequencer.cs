@@ -63,9 +63,14 @@ namespace HungraviyEx2019
 
             // タイムボーナス
             yield return TimeBonus();
+            yield return WaitNext;
 
             // ライフボーナス
             yield return LifeBonus();
+            yield return WaitNext;
+
+            // アイテムパーフェクトボーナス
+
 
             GameManager.ShowClick();
             CanNext = true;
