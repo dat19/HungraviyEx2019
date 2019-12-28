@@ -17,9 +17,9 @@ namespace HungraviyEx2019
 
         void LateUpdate()
         {
-            int sec = Mathf.FloorToInt(GameParams.PlayTime);
-            int milli = Mathf.FloorToInt(GameParams.PlayTime * 100);
-            timeText.text = $"{sec}{FontSize}.{(milli - sec * 100):00}</size>";
+            int sec = Mathf.FloorToInt(GameParams.playTime);
+            int milli = Mathf.FloorToInt(GameParams.playTime * 100f);
+            timeText.text = $"{sec}{FontSize}.{(milli - sec * 100f):00}</size>";
         }
     }
 }

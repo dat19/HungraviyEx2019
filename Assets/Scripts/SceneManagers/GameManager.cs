@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace HungraviyEx2019
 {
@@ -16,6 +17,10 @@ namespace HungraviyEx2019
         Animator clickAnimator = null;
         [Tooltip("ハイスコアアニメ"), SerializeField]
         Animator highScoreAnimator = null;
+        [Tooltip("タイムボーナステキスト"), SerializeField]
+        TextMeshProUGUI timeBonusText = null;
+        [Tooltip("パーフェクトボーナステキスト"), SerializeField]
+        TextMeshProUGUI perfectBonusText = null;
         [Tooltip("シーン切り替えから、シーンを切り替えられるようになるまでの待ち時間"), SerializeField]
         float nextSceneWait = 1f;
 
@@ -54,11 +59,14 @@ namespace HungraviyEx2019
 
             if (state == StateType.GameOver)
             {
-                if (!instance.clickAnimator.GetBool("Show"))
+                if (!instance.clickAnimator.gameObject.activeSelf)
                 {
+                    // ゲームオーバーになって、クリック可能になる秒数が経過した初回にクリック表示とハイスコアチェック
+                    instance.clickAnimator.gameObject.SetActive(true);
                     instance.clickAnimator.SetBool("Show", true);
                     if (GameParams.CheckHighScore())
                     {
+                        instance.highScoreAnimator.gameObject.SetActive(true);
                         instance.highScoreAnimator.SetTrigger("Show");
                     }
                 }
@@ -71,7 +79,7 @@ namespace HungraviyEx2019
                     state = StateType.NextScene;
                 }
             }
-            else if (state == StateType.Clear && ClearObject.CanNext)
+            else if (state == StateType.Clear && ClearSequencer.CanNext)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -92,15 +100,39 @@ namespace HungraviyEx2019
             }
         }
 
-        public static void Clear()
+        /// <summary>
+        /// クリアシーケンスを開始します。
+        /// </summary>
+        public static void Clear(ClearObject co)
         {
-            instance.clearAnimator.SetTrigger("Clear");
             state = StateType.Clear;
             waitStartTime = Time.time;
+            ClearSequencer.Start(co);
+        }
+
+        public static void ShowClear()
+        {
+            instance.clearAnimator.gameObject.SetActive(true);
+            instance.clearAnimator.SetTrigger("Clear");
+            waitStartTime = Time.time;
+        }
+
+        /// <summary>
+        /// タイムボーナス表示
+        /// </summary>
+        /// <param name="text"></param>
+        public void TimeBonusText(string text)
+        {
+            if (!timeBonusText.gameObject.activeSelf)
+            {
+                timeBonusText.gameObject.SetActive(true);
+            }
+            timeBonusText.text = text;
         }
 
         public static void GameOver()
         {
+            instance.gameOverAnimator.gameObject.SetActive(true);
             instance.gameOverAnimator.SetTrigger("GameOver");
             state = StateType.GameOver;
             waitStartTime = Time.time;
@@ -108,6 +140,7 @@ namespace HungraviyEx2019
 
         public static void ShowClick()
         {
+            instance.clickAnimator.gameObject.SetActive(true);
             instance.clickAnimator.SetBool("Show", true);
         }
     }

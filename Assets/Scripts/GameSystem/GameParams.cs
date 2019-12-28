@@ -27,6 +27,16 @@ namespace HungraviyEx2019
         public const int ScoreMax = 999999;
 
         /// <summary>
+        /// パーフェクトボーナス
+        /// </summary>
+        public const int PerfectBonus = 10000;
+
+        /// <summary>
+        /// 秒あたりの残り時間ボーナス
+        /// </summary>
+        public const float TimeBonus = 100;
+
+        /// <summary>
         /// ハイスコアを記録
         /// </summary>
         static bool isHighScore = false;
@@ -75,13 +85,13 @@ namespace HungraviyEx2019
         /// <summary>
         /// プレイタイム
         /// </summary>
-        public static float PlayTime { get; private set; }
+        public static float playTime;
 
         private void Awake()
         {
             Score = 0;
             HighScore = 0;
-            PlayTime = 0;
+            playTime = 0;
         }
 
 #if UNITY_EDITOR
@@ -98,7 +108,7 @@ namespace HungraviyEx2019
         {
             if (Graviy.CanMove)
             {
-                PlayTime -= Time.fixedDeltaTime;
+                playTime -= Time.fixedDeltaTime;
             }
         }
 
@@ -150,7 +160,7 @@ namespace HungraviyEx2019
         /// <param name="tm"></param>
         public static void SetStartTime(float tm)
         {
-            PlayTime = tm;
+            playTime = tm;
         }
 
         /// <summary>

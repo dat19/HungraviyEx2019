@@ -244,8 +244,7 @@ namespace HungraviyEx2019 {
         {
             if (GameManager.state != GameManager.StateType.Game) return;
 
-            GameManager.state = GameManager.StateType.Clear;
-            collision.GetComponent<ClearObject>().Inhale();
+            GameManager.Clear(collision.GetComponent<ClearObject>());
         }
 
         void Miss(Collider2D col)

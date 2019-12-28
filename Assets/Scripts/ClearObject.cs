@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace HungraviyEx2019
 {
@@ -21,41 +22,20 @@ namespace HungraviyEx2019
             Gulp
         }
 
-        /// <summary>
-        /// クリック表示までの秒数
-        /// </summary>
-        const float WaitClick = 0.5f;
-
-        /// <summary>
-        /// 次のステージやエンディングに進んでよい時、trueを返します。
-        /// </summary>
-        public static bool CanNext { get;private set; }
-
         Animator anim;
+        WaitForFixedUpdate wait = new WaitForFixedUpdate();
 
         private void Awake()
         {
             anim = GetComponent<Animator>();
         }
 
-        public void ToEatScale()
-        {
-            anim.SetInteger("State", (int)AnimType.ToEat);
-        }
-
-        public void Inhale()
-        {
-            CanNext = false;
-            StartCoroutine(InhaleCoroutine());
-        }
-
-        IEnumerator InhaleCoroutine()
+        public IEnumerator ToBlackhole()
         {
             Blackhole.instance.ClearStart(targetOffset);
 
             anim.SetInteger("State", (int)AnimType.Inhale);
             float time = 0f;
-            WaitForFixedUpdate wait = new WaitForFixedUpdate();
             Vector3 startPos = transform.position;
 
             while (time < inhaleSeconds)
@@ -65,11 +45,10 @@ namespace HungraviyEx2019
                 transform.position = Vector3.Lerp(startPos, Graviy.MouthPosition + targetOffset, t);
                 yield return wait;
             }
+        }
 
-            Blackhole.instance.ClearDone();
-            Graviy.instance.StartEat();
-
-            // 落下
+        public IEnumerator Fall()
+        {
             Vector3 v = Vector3.zero;
             bool startGulp = false;
             Vector3 pos = transform.position;
@@ -79,22 +58,19 @@ namespace HungraviyEx2019
                 pos += v * Time.fixedDeltaTime;
                 pos.x = Graviy.MouthPosition.x;
                 transform.position = pos;
-                if (!startGulp && (transform.position.y < (Graviy.MouthPosition.y+gulpHeight))) {
+                if (!startGulp && (transform.position.y < (Graviy.MouthPosition.y + gulpHeight)))
+                {
                     startGulp = true;
                     anim.SetInteger("State", (int)AnimType.Gulp);
                 }
 
                 yield return wait;
             }
+        }
 
-            // 口を閉じてクリア表示
-            Graviy.instance.CloseMouth();
-            GameManager.Clear();
-
-            yield return new WaitForSeconds(WaitClick);
-
-            GameManager.ShowClick();
-            CanNext = true;
+        public void ToEatScale()
+        {
+            anim.SetInteger("State", (int)AnimType.ToEat);
         }
     }
 }
