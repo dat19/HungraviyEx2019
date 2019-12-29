@@ -36,8 +36,6 @@ namespace HungraviyEx2019
         readonly static string PerfectBonusMessage = $"パーフェクト!!      <mspace=0.7em>{PerfectPoint}</mspace>";
         const string Kosu = "<size=40>";
         static readonly WaitForFixedUpdate waitFixed = new WaitForFixedUpdate();
-        static readonly WaitForSeconds waitNext = new WaitForSeconds(WaitNextSeconds);
-        static readonly WaitForSeconds waitLife = new WaitForSeconds(WaitLifeSeconds);
 
         public static void Start(ClearObject clearObject)
         {
@@ -67,15 +65,15 @@ namespace HungraviyEx2019
             Graviy.instance.CloseMouth();
             GameManager.ShowClear();
 
-            yield return waitNext;
+            yield return WaitForSecondsOrClick(WaitNextSeconds);
 
             // タイムボーナス
             yield return TimeBonus();
-            yield return waitNext;
+            yield return WaitForSecondsOrClick(WaitNextSeconds);
 
             // ライフボーナス
             yield return LifeBonus();
-            yield return waitNext;
+            yield return WaitForSecondsOrClick(WaitNextSeconds);
 
             // アイテムパーフェクトボーナス
             if (GameManager.GetItem >= GameManager.ItemCount)
@@ -88,7 +86,7 @@ namespace HungraviyEx2019
                 GameManager.instance.PerfectBonusText($"{GameManager.ItemCount}{Kosu}コ</size>中{GameManager.GetItem}{Kosu}コ</size>ゲット。{GameManager.ItemCount - GameManager.GetItem}{Kosu}コ</size>とりのがし...");
             }
 
-            yield return waitNext;
+            yield return WaitForSecondsOrClick(WaitNextSeconds);
 
             GameManager.ShowClick();
             CanNext = true;
@@ -99,11 +97,11 @@ namespace HungraviyEx2019
             int bonus = 0;
             GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
 
-            yield return waitNext;
+            yield return WaitForSecondsOrClick(WaitNextSeconds);
 
             while (GameParams.Life > 0)
             {
-                yield return waitLife;
+                yield return WaitForSecondsOrClick(WaitLifeSeconds);
 
                 bonus += LifeBonusPoint;
                 GameParams.AddScore(LifeBonusPoint);
@@ -118,7 +116,7 @@ namespace HungraviyEx2019
             GameManager.instance.TimeBonusText($"{TimeBonusPrefix}{bonus,5}</mspace>");
             int leftTime = Mathf.FloorToInt(GameParams.playTime * GameParams.TimeBonus);
 
-            yield return waitNext;
+            yield return WaitForSecondsOrClick(WaitNextSeconds);
 
             int keta = 1;
             int waru = 10;
@@ -138,6 +136,15 @@ namespace HungraviyEx2019
 
                 keta *= 10;
                 waru *= 10;
+            }
+        }
+
+        static IEnumerator WaitForSecondsOrClick(float sec)
+        {
+            float start = Time.time;
+            while (((Time.time-start) < sec) && !Input.GetMouseButtonDown(0))
+            {
+                yield return waitFixed;
             }
         }
     }

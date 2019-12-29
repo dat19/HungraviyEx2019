@@ -860,5 +860,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2411f06e3de6e5642bb1991ccff157c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneWait: 4
+  nextSceneWait: 2
   highScoreText: {fileID: 470458395}

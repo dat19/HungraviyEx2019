@@ -7,7 +7,7 @@ namespace HungraviyEx2019
     public class EndingManager : SceneManagerBase
     {
         [Tooltip("シーン切り替えから、シーンを切り替えられるようになるまでの待ち時間"), SerializeField]
-        float nextSceneWait = 4f;
+        float nextSceneWait = 2f;
         [Tooltip("ハイスコア表示"), SerializeField]
         GameObject highScoreText = null;
 
