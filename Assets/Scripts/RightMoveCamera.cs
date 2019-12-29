@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace HungraviyEx2019
 {
+    [RequireComponent(typeof(BGScroller))]
     public class RightMoveCamera : MonoBehaviour
     {
         /// <summary>
@@ -11,9 +12,12 @@ namespace HungraviyEx2019
         /// </summary>
         static Vector3 offset;
 
+        static BGScroller bgScroller = null;
+
         void Start()
         {
             offset = transform.position - Graviy.instance.transform.position;
+            bgScroller = GetComponent<BGScroller>();
         }
 
         void LateUpdate()
@@ -26,6 +30,7 @@ namespace HungraviyEx2019
             transform.position = next;
 
             Graviy.instance.AdjustLeftPosition();
+            bgScroller.UpdateBGPosition();
         }
     }
 }

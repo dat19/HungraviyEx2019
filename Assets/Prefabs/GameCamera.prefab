@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2516519026424568711
 Transform:
   m_ObjectHideFlags: 0
@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1389308616605751417
 Transform:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 67f57e2c99daa9d4998dc0280a43dee0, type: 2}
+  - {fileID: 2100000, guid: 2b3026946824dd54681930c38f0b18ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,8 +212,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6139822447926980982}
-  - component: {fileID: 6139822447926980981}
   - component: {fileID: 3840370217707087231}
+  - component: {fileID: 8609839053098766241}
+  - component: {fileID: 6139822447926980981}
   - component: {fileID: 170164074}
   m_Layer: 0
   m_Name: GameCamera
@@ -238,6 +239,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3840370217707087231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139822447926980987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f224f65aa5b5c5d409f8a33a4c79b1c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8609839053098766241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139822447926980987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc70391fdeb563349bb6c65836159ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetBG: {fileID: 0}
+  cameraTop: 29.5
+  cameraBottom: -8.5
+  bgTop: 24.6
+  bgBottom: -3.6
 --- !u!20 &6139822447926980981
 Camera:
   m_ObjectHideFlags: 0
@@ -281,18 +311,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &3840370217707087231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6139822447926980987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f224f65aa5b5c5d409f8a33a4c79b1c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &170164074
 MonoBehaviour:
   m_ObjectHideFlags: 0

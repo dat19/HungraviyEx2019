@@ -26,6 +26,10 @@ namespace HungraviyEx2019 {
         [Tooltip("ゲームオーバー時の重力スケール"), SerializeField]
         float gameOverGravityScale = 0.5f;
 
+        [Header("デバッグ")]
+        [Tooltip("無敵"), SerializeField]
+        bool isMuteki = false;
+
         public enum AnimType
         {
             Idle,   // 0
@@ -234,6 +238,10 @@ namespace HungraviyEx2019 {
         {
             if (collision.CompareTag("DamageTile"))
             {
+#if UNITY_EDITOR
+                if (isMuteki) return;
+#endif
+
                 Miss(collision);
             }
             else if (collision.CompareTag("Clear"))
