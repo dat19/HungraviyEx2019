@@ -124,6 +124,15 @@ namespace HungraviyEx2019
         }
 
         /// <summary>
+        /// ライフを指定の数増やします。
+        /// </summary>
+        /// <param name="add">回復させるハートの数</param>
+        public static void AddLife(int add)
+        {
+            Life = Mathf.Min(Life + add, LifeMax);
+        }
+
+        /// <summary>
         /// ライフを減らします。ゲームオーバーの状態になったらtrueを返します。
         /// </summary>
         /// <returns>ゲームオーバーならtrue</returns>

@@ -8,6 +8,8 @@ namespace HungraviyEx2019
     {
         [Tooltip("得点"), SerializeField]
         int point = 100;
+        [Tooltip("回復"), SerializeField]
+        int heal = 0;
 
         bool isEating = false;
         float eatStartTime = 0;
@@ -48,6 +50,7 @@ namespace HungraviyEx2019
                 // 食べる
                 Graviy.instance.EatDone(this);
                 GameParams.AddScore(point);
+                GameParams.AddLife(heal);
                 Destroy(gameObject);
                 return;
             }
