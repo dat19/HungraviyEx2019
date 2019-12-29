@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Blackhole
   - Item
+  - FallBlock
   layers:
   - Default
   - TransparentFX
