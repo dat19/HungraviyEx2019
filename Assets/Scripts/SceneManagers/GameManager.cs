@@ -114,6 +114,12 @@ namespace HungraviyEx2019
             }
         }
 
+        public override void OnFadeOutDone()
+        {
+            base.OnFadeOutDone();
+            GameParams.InitStageParams();
+        }
+
         /// <summary>
         /// クリアシーケンスを開始します。
         /// </summary>

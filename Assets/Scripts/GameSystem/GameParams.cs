@@ -143,6 +143,14 @@ namespace HungraviyEx2019
             return (Stage >= StageMax);
         }
 
+        /// <summary>
+        /// フェードアウト時に呼び出すステージ開始前の初期化処理
+        /// </summary>
+        public static void InitStageParams()
+        {
+            Life = LifeMax;
+        }
+
         #region Private Methods
 
         /// <summary>

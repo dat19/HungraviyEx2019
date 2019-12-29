@@ -121,6 +121,8 @@ namespace HungraviyEx2019 {
         private void Start()
         {
             mainCamera = Camera.main;
+            mutekiTime = 0;
+            Energy = EnergyMax;
         }
 
         void FixedUpdate()

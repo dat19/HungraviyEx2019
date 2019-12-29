@@ -125,6 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30feb60edfa573d49a0f91ec5c0e8d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetOffset: {x: 0, y: 6, z: 0}
+  inhaleSeconds: 1
+  gulpHeight: 1
 --- !u!58 &58693738128974060
 CircleCollider2D:
   m_ObjectHideFlags: 0

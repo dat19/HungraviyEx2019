@@ -57,6 +57,7 @@ namespace HungraviyEx2019
                 {
                     var kasoku = (-speedMax / distanceMax) * kyori + speedMax;
                     rb.AddForce(move.normalized * kasoku, ForceMode2D.Force);
+                    Debug.Log($"  fixed={Time.fixedDeltaTime} / delta={Time.deltaTime} / vel={rb.velocity} / kasoku={kasoku}");
                     isSucked = true;
                 }
             }
