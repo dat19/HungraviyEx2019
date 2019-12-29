@@ -11,6 +11,9 @@ namespace HungraviyEx2019
     /// </summary>
     public class GameParams : Singleton<GameParams>
     {
+        [Tooltip("デバッグ用開始ステージ"), SerializeField]
+        int StartStage = 0;
+
         /// <summary>
         /// 全ステージ数
         /// </summary>
@@ -118,7 +121,9 @@ namespace HungraviyEx2019
         public static void NewGame()
         {
             Life = LifeMax;
-            Stage = 0;
+#if UNITY_EDITOR
+            Stage = Instance.StartStage;
+#endif
             Score = 0;
             isHighScore = false;
         }

@@ -12,10 +12,10 @@ namespace HungraviyEx2019
         float cameraTop = 29.5f;
         [Tooltip("カメラの下限"), SerializeField]
         float cameraBottom = -8.5f;
-        [Tooltip("背景の上限"), SerializeField]
-        float bgTop = 24.6f;
-        [Tooltip("背景の下限"), SerializeField]
-        float bgBottom = -3.6f;
+        [Tooltip("背景の上限オフセット"), SerializeField]
+        float bgTop = 0.18f;
+        [Tooltip("背景の下限オフセット"), SerializeField]
+        float bgBottom = -0.18f;
 
         /// <summary>
         /// カメラの移動範囲
@@ -27,18 +27,35 @@ namespace HungraviyEx2019
         /// </summary>
         float camToBGRate;
 
+        Material [] bgMaterials;
+
         void Start()
         {
-            cameraRange = cameraTop - cameraBottom;                 
+            cameraRange = cameraTop - cameraBottom;
+            camToBGRate = (bgTop - bgBottom) / (cameraRange);
+            Renderer[] rends = targetBG.GetComponentsInChildren<Renderer>();
+            bgMaterials = new Material[rends.Length];
+            for (int i=0; i<rends.Length;i++)
+            {
+                bgMaterials[i] = rends[i].material;
+            }
         }
 
         public void UpdateBGPosition()
         {
-            Vector3 campos = targetBG.position;
-            float t = (transform.position.y-cameraBottom)/ cameraRange;
-            campos.y = Mathf.Lerp(bgBottom, bgTop, t);
+            Vector2 ofs = Vector2.zero;
 
-            targetBG.position = campos;
+            // X
+            ofs.x = transform.position.x*camToBGRate;
+
+            // Y
+            float t = (transform.position.y-cameraBottom)/ cameraRange;
+            ofs.y = Mathf.Lerp(bgBottom, bgTop, t);
+
+            for (int i=0;i<bgMaterials.Length;i++)
+            {
+                bgMaterials[i].mainTextureOffset = ofs;
+            }
         }
     }
 }

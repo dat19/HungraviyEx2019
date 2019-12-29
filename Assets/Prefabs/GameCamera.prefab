@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1389308616605751417
 Transform:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 5468106344731987674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 96, y: 54, z: 1}
+  m_LocalScale: {x: 48, y: 27, z: 1}
   m_Children:
   - {fileID: 2516519026424568711}
   m_Father: {fileID: 6139822447926980982}
@@ -263,11 +263,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc70391fdeb563349bb6c65836159ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetBG: {fileID: 0}
+  targetBG: {fileID: 1389308616605751417}
   cameraTop: 29.5
   cameraBottom: -8.5
-  bgTop: 24.6
-  bgBottom: -3.6
+  bgTop: 0.18
+  bgBottom: -0.18
 --- !u!20 &6139822447926980981
 Camera:
   m_ObjectHideFlags: 0
