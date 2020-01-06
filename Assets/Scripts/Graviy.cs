@@ -136,6 +136,9 @@ namespace HungraviyEx2019 {
                 if (GameManager.state == GameManager.StateType.Game)
                 {
                     rb.velocity = Vector2.zero;
+                }else if (GameManager.state == GameManager.StateType.Clear)
+                {
+                    anim.SetInteger("State", (int)AnimType.Idle);
                 }
                 return;
             }
