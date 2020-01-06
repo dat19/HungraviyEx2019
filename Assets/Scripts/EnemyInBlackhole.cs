@@ -6,7 +6,6 @@ namespace HungraviyEx2019
 {
     public class EnemyInBlackhole : MonoBehaviour
     {
-
         public enum StateType
         {
             None = -1,
