@@ -64,6 +64,7 @@ namespace HungraviyEx2019
         Suiyose suiyose = null;
         bool lastSucked = false;
         EnemyInBlackhole enemyInBlackhole = null;
+        int mapNameLayer;
 
         private void Awake()
         {
@@ -76,6 +77,7 @@ namespace HungraviyEx2019
             spRenderer = GetComponentInChildren<SpriteRenderer>();
             suiyose = GetComponent<Suiyose>();
             enemyInBlackhole = GetComponentInChildren<EnemyInBlackhole>();
+            mapNameLayer = LayerMask.NameToLayer("Map");
         }
 
         private void Start()
@@ -161,7 +163,7 @@ namespace HungraviyEx2019
                 // 足場がある時は移動
                 anim.SetInteger("State", (int)AnimType.Walk);
 
-                // 反転チェック
+                // 足場による反転チェック
                 Vector3 offset = footOffset;
                 if (spRenderer.flipX)
                 {
@@ -178,17 +180,22 @@ namespace HungraviyEx2019
                 {
                     spRenderer.flipX = !spRenderer.flipX;
                 }
-                anim.speed = Mathf.Abs(rb.velocity.x) * velocityToAnimSpeed;
 
-                Vector2 v = rb.velocity;
-                v.x = spRenderer.flipX ? walkSpeed : -walkSpeed;
-                rb.velocity = v;
+                UpdateVelocity();
             }
             else
             {
                 // 足場がない時は、アニメをStandに変更して慣性移動
                 anim.SetInteger("State", (int)AnimType.Stand);
             }
+        }
+
+        void UpdateVelocity()
+        {
+            Vector2 v = rb.velocity;
+            v.x = spRenderer.flipX ? walkSpeed : -walkSpeed;
+            rb.velocity = v;
+            anim.speed = Mathf.Abs(v.x) * velocityToAnimSpeed;
         }
 
         /// <summary>
@@ -201,6 +208,30 @@ namespace HungraviyEx2019
                 GameManager.DecrementItemCount();
                 Instantiate(sweets, transform.position, Quaternion.identity);
             }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if ((collision.collider.gameObject.layer == mapNameLayer)
+                ||  (collision.collider.gameObject.CompareTag("Enemy"))) {
+
+                for (int i=0;i<collision.contacts.Length;i++)
+                {
+                    float footY = capCollider.bounds.min.y + footCheckDistance;
+                    if (collision.contacts[i].point.y >= footY)
+                    {
+                        float dir = Mathf.Sign(collision.contacts[i].point.x - capCollider.bounds.center.x);
+                        spRenderer.flipX = dir < -0.5f;
+                        UpdateVelocity();
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            OnCollisionEnter2D(collision);            
         }
     }
 }
