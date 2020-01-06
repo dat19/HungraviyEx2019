@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   routes:
   - waitSeconds: 1
-    targetPosition: {x: 0, y: -7}
+    targetPosition: {x: -1, y: 0}
     speed: 5
   - waitSeconds: 1
-    targetPosition: {x: 0, y: 7}
+    targetPosition: {x: 2, y: 0}
     speed: 5
