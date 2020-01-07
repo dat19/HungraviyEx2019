@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartStage: 0
+  guiSkin: {fileID: 11400000, guid: 2c57fcf1cd7a4044bab40b15a6bde6c7, type: 2}
 --- !u!82 &190469380
 AudioSource:
   m_ObjectHideFlags: 0

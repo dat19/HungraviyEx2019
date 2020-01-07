@@ -882,6 +882,12 @@ PrefabInstance:
       propertyPath: isMuteki
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6245157820316660159, guid: 6e24f00a32e55c541808b56e1f227e61,
+        type: 3}
+      propertyPath: guiSkin
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c57fcf1cd7a4044bab40b15a6bde6c7,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e24f00a32e55c541808b56e1f227e61, type: 3}
 --- !u!1001 &1010616377

@@ -96,6 +96,8 @@ namespace HungraviyEx2019
                 return;
             }
 
+            bool isSucked = suiyose.Suck();
+
             switch (state)
             {
                 case StateType.Move:
@@ -107,12 +109,11 @@ namespace HungraviyEx2019
                         anim.SetFloat("Speed", 1);
                         state = StateType.Blackhole;
 
-                        suiyose.Suck();
                         lastSucked = true;
                         break;
                     }
                     // 吸い寄せされていたら、歩きはキャンセルして、吸い寄せ
-                    if (suiyose.Suck())
+                    if (isSucked)
                     {
                         lastSucked = true;
                         anim.SetInteger("State", (int)AnimType.Sucked);

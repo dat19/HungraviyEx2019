@@ -13,6 +13,13 @@ namespace HungraviyEx2019
     {
         [Tooltip("デバッグ用開始ステージ"), SerializeField]
         int StartStage = 0;
+        [Tooltip("GUISkin"), SerializeField]
+        GUISkin guiSkin = null;
+
+        /// <summary>
+        /// ターゲットのフレームレート
+        /// </summary>
+        const int TargetFrameRate = 60;
 
         /// <summary>
         /// 全ステージ数
@@ -95,6 +102,7 @@ namespace HungraviyEx2019
             Score = 0;
             HighScore = 0;
             playTime = 0;
+            Application.targetFrameRate = TargetFrameRate;
         }
 
 #if UNITY_EDITOR
@@ -202,6 +210,14 @@ namespace HungraviyEx2019
         }
 
         #endregion Private Methods
+
+        public static GUIStyle LabelSkin
+        {
+            get
+            {
+                return Instance.guiSkin.GetStyle("Label");
+            }
+        }
 
     }
 }
