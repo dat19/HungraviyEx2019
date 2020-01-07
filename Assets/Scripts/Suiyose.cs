@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//#define DEBUG_FPS
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ namespace HungraviyEx2019
         float distanceMax = 15f;
         [Tooltip("ブラックホールの距離が0の時の加速度"), SerializeField]
         float speedMax = 25f;
+        [Tooltip("自分でSuck()を呼び出す時、チェックを入れます"), SerializeField]
+        bool isSelfSuck = false;
 
         /// <summary>
         /// 重力の最小レート
@@ -19,15 +23,18 @@ namespace HungraviyEx2019
         /// <summary>
         /// 吸い寄せられたフラグ
         /// </summary>
+        [HideInInspector]
         public bool isSucked = false;
 
         Rigidbody2D rb = null;
-        /// <summary>
-        /// 処理したフレーム数。すでに同じフレームが設定されていたら、別で処理済みなので処理しない
-        /// </summary>
-        int procFrame = 0;
         Collider2D myCollider = null;
         float defaultGravityScale = 0;
+
+#if DEBUG_FPS
+        float debugFps = 0;
+        float lastSuckTime = 0;
+        int lastFrameCount = 0;
+#endif
 
         void Awake()
         {
@@ -38,7 +45,7 @@ namespace HungraviyEx2019
 
         private void FixedUpdate()
         {
-            if (!Graviy.CanMove)
+            if (!isSelfSuck || !Graviy.CanMove)
             {
                 return;
             }
@@ -48,12 +55,6 @@ namespace HungraviyEx2019
 
         public bool Suck()
         {
-            if (procFrame >= Time.frameCount)
-            {
-                return isSucked;
-            }
-            procFrame = Time.frameCount;
-
             // ブラックホールが発生しているか判定
             isSucked = false;
             if (Blackhole.IsSpawn)
@@ -75,6 +76,19 @@ namespace HungraviyEx2019
                     var kasoku = (-speedMax / distanceMax) * kyori + speedMax;
                     rb.AddForce(move.normalized * kasoku, ForceMode2D.Force);
                     isSucked = true;
+
+#if DEBUG_FPS
+                    if (Mathf.Approximately(Time.time, lastSuckTime))
+                    {
+                        debugFps = -1;
+                    }
+                    else
+                    {
+                        debugFps = 1f / (float)(Time.time - lastSuckTime);
+                    }
+                    lastSuckTime = Time.time;
+#endif
+
                 }
             }
 
@@ -85,5 +99,17 @@ namespace HungraviyEx2019
 
             return isSucked;
         }
+
+#if DEBUG_FPS
+        private void OnGUI()
+        {
+            if ((lastFrameCount == Time.frameCount)
+                || Mathf.Approximately(debugFps, 0)) return;
+
+            lastFrameCount = Time.frameCount;
+            GUI.color = Color.red;
+            GUI.Label(new Rect(20, 100, 200, 50), debugFps.ToString());//, GameParams.LabelSkin);
+        }
+#endif
     }
 }

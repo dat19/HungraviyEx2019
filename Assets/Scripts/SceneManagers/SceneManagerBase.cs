@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//#define DEBUG_DISPLAY_SCENENAME
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +36,7 @@ namespace HungraviyEx2019
         {
         }
 
-#if DEBUG
+#if DEBUG_DISPLAY_SCENENAME
         private void OnGUI()
         {
             GUI.Label(new Rect(20, 20, 100, 30), SceneChanger.NowScene.ToString());

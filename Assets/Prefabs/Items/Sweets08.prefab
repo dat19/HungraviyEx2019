@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceMax: 15
   speedMax: 25
+  isSelfSuck: 1
   isSucked: 0
 --- !u!114 &2219386926012573624
 MonoBehaviour:
