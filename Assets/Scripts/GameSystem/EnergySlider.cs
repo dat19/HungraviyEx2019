@@ -16,7 +16,7 @@ namespace HungraviyEx2019
 
         private void LateUpdate()
         {
-            energySlider.value = Graviy.Energy / Graviy.EnergyMax;
+            energySlider.value = Mathf.Clamp01(Graviy.Energy / Graviy.EnergyMax);
         }
     }
 }

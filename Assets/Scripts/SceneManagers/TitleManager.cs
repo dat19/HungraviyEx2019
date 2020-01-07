@@ -7,6 +7,13 @@ namespace HungraviyEx2019
 {
     public class TitleManager : SceneManagerBase
     {
+        static bool isStart = false;
+
+        private new void Awake()
+        {
+            isStart = false;
+            base.Awake();
+        }
 
         public override void OnFadeOutDone()
         {
@@ -16,11 +23,22 @@ namespace HungraviyEx2019
 
         private void Update()
         {
+            if (!GameParams.CanMove || isStart) return;
+
             if (Input.GetMouseButtonDown(0))
             {
                 SoundController.Play(SoundController.SeType.Click);
                 GameParams.NewGame();
                 SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
+                isStart = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+                Application.Quit();
+#endif
             }
         }
     }

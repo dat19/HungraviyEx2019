@@ -7,20 +7,13 @@ namespace HungraviyEx2019
 {
     public class StageManager : SceneManagerBase
     {
+        [Tooltip("ステージ時間"), SerializeField]
+        float stageTime = 99.99f;
+
         public override void OnFadeOutDone()
         {
+            GameParams.SetStartTime(stageTime);
             SceneManager.SetActiveScene(gameObject.scene);
         }
-
-#if DEBUG
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SoundController.Play(SoundController.SeType.Click);
-                SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
-            }
-        }
-#endif
     }
 }

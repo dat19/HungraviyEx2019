@@ -7,14 +7,10 @@ namespace HungraviyEx2019 {
     {
         public static Graviy instance = null;
 
-        [Tooltip("重力係数"), SerializeField]
-        float gravityScale = 1f;
-        [Tooltip("ブラックホール発生時に、エネルギーを減らす秒速"), SerializeField]
-        float energySubBlackhole = -0.3f;
         [Tooltip("着地時のエネルギーが回復秒速"), SerializeField]
-        float energyRecoveryOnGround = 0.3f;
+        float energyRecoveryOnGround = 0.4f;
         [Tooltip("空中のエネルギー回復秒速"), SerializeField]
-        float energyRecoveryInTheAir = 0.1f;
+        float energyRecoveryInTheAir = 0.2f;
         [Tooltip("食べ物を食べた時に回復するエネルギー量"), SerializeField]
         float energyFood = 0.5f;
         [Tooltip("はらぺこ切り替えエネルギー"), SerializeField]
@@ -27,13 +23,25 @@ namespace HungraviyEx2019 {
         float mutekiSeconds = 2f;
         [Tooltip("ふっとばす時の加速"), SerializeField]
         float blowOffAdd = 15f;
+        [Tooltip("ゲームオーバー時の重力スケール"), SerializeField]
+        float gameOverGravityScale = 0.5f;
+
+        [Header("デバッグ")]
+        [Tooltip("無敵"), SerializeField]
+        bool isMuteki = false;
 
         public enum AnimType
         {
-            Idle,
-            Sucked,
-            Fall,
+            Idle,   // 0
+            Sucked, // 1
+            Fall,   // 2
+            Dead,   // 3
         }
+
+        /// <summary>
+        /// ブラックホール発生時に、エネルギーを減らす秒速
+        /// </summary>
+        const float EnergySubBlackhole = -0.3f;
 
         /// <summary>
         /// エネルギーの最大値
@@ -42,7 +50,7 @@ namespace HungraviyEx2019 {
         /// <summary>
         /// エネルギーの最小値
         /// </summary>
-        public const float EnergyMin = -0.1f;
+        public const float EnergyMin = EnergySubBlackhole * 0.04f;
 
         public static Vector3 MouthPosition
         {
@@ -76,6 +84,7 @@ namespace HungraviyEx2019 {
         static Item[] eatingObjects = new Item[EatingMax];
         static Vector3 mouthOffsetLeft = Vector3.zero;
         static Vector3 mouthOffsetRight = Vector3.zero;
+        static int gameOverLayer;
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -84,12 +93,14 @@ namespace HungraviyEx2019 {
         {
             get
             {
-                return !Fade.IsFading;
+                return !Fade.IsFading
+                    && !SceneChanger.IsChanging
+                    && GameManager.state == GameManager.StateType.Game;
             }
         }
 
         /// <summary>
-        /// 現在のエネルギー。0が空。1が満タン。
+        /// 現在のエネルギー。0以下が空。1が満タン。一旦離すまで回復しないように、2フレーム分マイナスにしておく
         /// </summary>
         public static float Energy { get; private set; }
 
@@ -108,18 +119,27 @@ namespace HungraviyEx2019 {
             eatingCount = 0;
             mouthOffsetRight = transform.Find("MouthPosition").transform.localPosition;
             mouthOffsetLeft.Set(-mouthOffsetRight.x, mouthOffsetRight.y, 0);
+            gameOverLayer = LayerMask.NameToLayer("GameOverPlayer");
         }
 
         private void Start()
         {
             mainCamera = Camera.main;
+            mutekiTime = 0;
+            Energy = EnergyMax;
         }
 
         void FixedUpdate()
         {
             if (!CanMove)
             {
-                rb.velocity = Vector2.zero;
+                if (GameManager.state == GameManager.StateType.Game)
+                {
+                    rb.velocity = Vector2.zero;
+                }else if (GameManager.state == GameManager.StateType.Clear)
+                {
+                    anim.SetInteger("State", (int)AnimType.Idle);
+                }
                 return;
             }
 
@@ -142,40 +162,37 @@ namespace HungraviyEx2019 {
                 }
             }
 
-            if (Blackhole.IsSpawn)
+            if (Input.GetMouseButton(0))
             {
-                Energy += energySubBlackhole * Time.fixedDeltaTime;
+                AddEnergy(EnergySubBlackhole * Time.fixedDeltaTime);
             }
             else
             {
                 if (OnGroundChecker.Check(capsuleCollider2D))
                 {
-                    Energy += energyRecoveryOnGround * Time.fixedDeltaTime;
+                    AddEnergy(energyRecoveryOnGround * Time.fixedDeltaTime);
                 }
                 else
                 {
-                    Energy += energyRecoveryInTheAir * Time.fixedDeltaTime;
-                }
-            }
-
-            Energy = Mathf.Clamp(Energy, EnergyMin, EnergyMax);
-
-            // はらぺこアニメ切り替えチェック
-            anim.SetLayerWeight(1, Energy < hungryAnim ? 1 : 0);
-
-            // 食べ終わりチェック
-            if (isEating && anim.GetFloat("EatSpeed") < 0)
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0)
-                {
-                    anim.SetBool("Inhole", false);
-                    isEating = false;
+                    AddEnergy(energyRecoveryInTheAir * Time.fixedDeltaTime);
                 }
             }
 
             // 無敵処理
             mutekiTime -= Time.fixedDeltaTime;
             anim.SetFloat("MutekiTime", mutekiTime);
+        }
+
+        /// <summary>
+        /// エネルギー加算
+        /// </summary>
+        /// <param name="add">加算量</param>
+        public static void AddEnergy(float add)
+        {
+            Energy = Mathf.Clamp(Energy + add, EnergyMin, EnergyMax);
+
+            // はらぺこアニメ切り替えチェック
+            anim.SetLayerWeight(1, Energy < instance.hungryAnim ? 1 : 0);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -195,16 +212,23 @@ namespace HungraviyEx2019 {
                 eatingObjects[eatingCount].Eat(eatItemSeconds, eatItemMinSeconds);
                 eatingCount++;
 
-                if (!isEating)
-                {
-                    isEating = true;
-                    anim.SetBool("Inhole", true);
-                    anim.SetFloat("EatSpeed", 1);
-                }
+                StartEat();
             }
             else if (collision.collider.CompareTag("Enemy"))
             {
                 Miss(collision.collider);
+            }
+        }
+
+        /// <summary>
+        /// 食べるアニメ開始
+        /// </summary>
+        public void StartEat()
+        {
+            if (!isEating)
+            {
+                isEating = true;
+                anim.SetBool("Inhale", true);
             }
         }
 
@@ -217,7 +241,15 @@ namespace HungraviyEx2019 {
         {
             if (collision.CompareTag("DamageTile"))
             {
+#if UNITY_EDITOR
+                if (isMuteki) return;
+#endif
+
                 Miss(collision);
+            }
+            else if (collision.CompareTag("Clear"))
+            {
+                Clear(collision);
             }
         }
 
@@ -226,16 +258,19 @@ namespace HungraviyEx2019 {
             OnTriggerEnter2D(collision);            
         }
 
+        /// <summary>
+        /// クリア演出を開始
+        /// </summary>
+        void Clear(Collider2D collision)
+        {
+            if (GameManager.state != GameManager.StateType.Game) return;
+
+            GameManager.Clear(collision.GetComponent<ClearObject>());
+        }
+
         void Miss(Collider2D col)
         {
             if (mutekiTime >= 0) { return; }
-
-            // ゲームオーバーチェック
-            if (GameParams.LifeDecrement())
-            {
-                Debug.Log($"ゲームオーバーへ");
-                return;
-            }
 
             // 無敵時間設定
             mutekiTime = mutekiSeconds;
@@ -248,12 +283,23 @@ namespace HungraviyEx2019 {
             rb.AddForce(add, ForceMode2D.Impulse);
 
             // 吸い寄せ中のアイテムがあったら解除
-            for (int i=0; i<eatingCount;i++)
+            for (int i = 0; i < eatingCount; i++)
             {
                 eatingObjects[i].ReleaseEat();
             }
             eatingCount = 0;
-            anim.SetBool("Inhole", false);
+            anim.SetBool("Inhale", false);
+            isEating = false;
+
+            // ゲームオーバーチェック
+            if (GameParams.LifeDecrement())
+            {
+                anim.SetInteger("State", (int)AnimType.Dead);
+                gameObject.layer = gameOverLayer;
+                rb.gravityScale = gameOverGravityScale;
+                GameManager.GameOver();
+                return;
+            }
         }
 
         public void AdjustLeftPosition()
@@ -291,14 +337,23 @@ namespace HungraviyEx2019 {
                     break;
                 }
             }
+            GameManager.GetItemCount();
             eatingCount--;
-            Debug.Log($"  eatingCount={eatingCount}");
 
             // 全て食べていたら、口を閉じる
             if (eatingCount <= 0)
             {
-                anim.SetFloat("EatSpeed", -1);
+                isEating = false;
+                CloseMouth();
             }
+        }
+
+        /// <summary>
+        /// 口を閉じる
+        /// </summary>
+        public void CloseMouth()
+        {
+            anim.SetBool("Inhale", false);
         }
     }
 }
