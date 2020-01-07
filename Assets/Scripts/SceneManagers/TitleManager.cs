@@ -32,6 +32,14 @@ namespace HungraviyEx2019
                 SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
                 isStart = true;
             }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+                Application.Quit();
+#endif
+            }
         }
     }
 }
