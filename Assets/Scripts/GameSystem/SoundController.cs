@@ -34,7 +34,14 @@ namespace HungraviyEx2019
         [SerializeField]
         public enum SeType
         {
-            Click,
+            Blackhole,
+            Sucked,
+            Press,
+            ToItem,
+            Eat,
+            Pomp,
+            Start,
+            Click
         };
         [TooltipAttribute("効果音リスト"), SerializeField]
         private AudioClip[] seList = null;
@@ -44,7 +51,12 @@ namespace HungraviyEx2019
         /// </summary>
         public enum BgmType
         {
-            Title,
+            Stage1,
+            Stage2,
+            Stage3,
+            Clear,
+            GameOver,
+            Ending
         }
         [Tooltip("BGMリスト"), SerializeField]
         private AudioClip[] bgmList = null;

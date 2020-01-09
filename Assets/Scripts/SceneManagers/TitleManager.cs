@@ -17,7 +17,7 @@ namespace HungraviyEx2019
 
         public override void OnFadeOutDone()
         {
-            SoundController.PlayBGM(SoundController.BgmType.Title, true);
+            SoundController.StopBGM();
             SceneManager.SetActiveScene(gameObject.scene);            
         }
 

@@ -390,9 +390,20 @@ MonoBehaviour:
   audioSE: {fileID: 190469381}
   audioBGM: {fileID: 190469380}
   seList:
-  - {fileID: 8300000, guid: 5e4100f1392fd4742a6c85de3c173a14, type: 3}
+  - {fileID: 8300000, guid: 00d116557bc0d64409e53b59c506de04, type: 3}
+  - {fileID: 8300000, guid: 30933a58b28c29f49b31c12b5b5e77ca, type: 3}
+  - {fileID: 8300000, guid: 42347576063262c4dae7f454b6b0f193, type: 3}
+  - {fileID: 8300000, guid: f3f19d79daa44ea4580c6fb9d94e4920, type: 3}
+  - {fileID: 8300000, guid: 95f4f81b292da7b4f943fbae2e76d703, type: 3}
+  - {fileID: 8300000, guid: 9bb897d15f27c4048950f94fe8a03405, type: 3}
+  - {fileID: 8300000, guid: e7933bb08b14aaa408de4c1ff1906ef1, type: 3}
   bgmList:
-  - {fileID: 8300000, guid: 5c02508c6308acd43a5f48146d95c411, type: 3}
+  - {fileID: 8300000, guid: d53f62aa619650f4ab876769a7431949, type: 3}
+  - {fileID: 8300000, guid: 11a8ab3cc57c99749ab81773786dfbd4, type: 3}
+  - {fileID: 8300000, guid: 8767be24195cb674f9f98bc41530d172, type: 3}
+  - {fileID: 8300000, guid: ed37f7aeaa5e626439608e4f3d42eeab, type: 3}
+  - {fileID: 8300000, guid: 746250f5b78fff540ac3af287f345c11, type: 3}
+  - {fileID: 8300000, guid: b1daacc204cf18e41a56bd00cb90c207, type: 3}
 --- !u!1 &238908508
 GameObject:
   m_ObjectHideFlags: 0

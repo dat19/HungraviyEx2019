@@ -15,5 +15,11 @@ namespace HungraviyEx2019
             GameParams.SetStartTime(stageTime);
             SceneManager.SetActiveScene(gameObject.scene);
         }
+
+        public override void OnFadeInDone()
+        {
+            base.OnFadeInDone();
+            SoundController.PlayBGM(SoundController.BgmType.Stage1 + GameParams.Stage);
+        }
     }
 }

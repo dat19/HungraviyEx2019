@@ -127,6 +127,7 @@ namespace HungraviyEx2019
         {
             state = StateType.Clear;
             waitStartTime = Time.time;
+            SoundController.PlayBGM(SoundController.BgmType.Clear);
             ClearSequencer.Start(co);
         }
 
@@ -179,6 +180,7 @@ namespace HungraviyEx2019
             instance.gameOverAnimator.SetTrigger("GameOver");
             state = StateType.GameOver;
             waitStartTime = Time.time;
+            SoundController.PlayBGM(SoundController.BgmType.GameOver);
         }
 
         public static void ShowClick()
