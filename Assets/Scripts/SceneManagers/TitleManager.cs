@@ -27,7 +27,7 @@ namespace HungraviyEx2019
 
             if (Input.GetMouseButtonDown(0))
             {
-                SoundController.Play(SoundController.SeType.Click);
+                SoundController.Play(SoundController.SeType.Start);
                 GameParams.NewGame();
                 SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
                 isStart = true;

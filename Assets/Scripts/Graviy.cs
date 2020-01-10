@@ -339,6 +339,7 @@ namespace HungraviyEx2019 {
             }
             GameManager.GetItemCount();
             eatingCount--;
+            SoundController.Play(SoundController.SeType.Eat);
 
             // 全て食べていたら、口を閉じる
             if (eatingCount <= 0)
