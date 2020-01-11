@@ -89,8 +89,6 @@ namespace HungraviyEx2019
 
             yield return WaitForSecondsOrClick(WaitNextSeconds);
 
-            SoundController.Play(SoundController.SeType.Start);
-
             GameManager.ShowClick();
             CanNext = true;
         }

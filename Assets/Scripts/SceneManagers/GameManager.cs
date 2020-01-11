@@ -98,7 +98,7 @@ namespace HungraviyEx2019
                 if (Input.GetMouseButtonDown(0))
                 {
                     Graviy.SetAudioListener(false);
-                    SoundController.Play(SoundController.SeType.Click);
+                    SoundController.Play(SoundController.SeType.Start);
                     instance.clickAnimator.SetBool("Show", false);
 
                     // ステージクリア
