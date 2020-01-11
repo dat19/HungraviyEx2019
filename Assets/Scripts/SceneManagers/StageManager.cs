@@ -12,16 +12,14 @@ namespace HungraviyEx2019
 
         public override void OnFadeOutDone()
         {
-            Debug.Log($"  fade out done");
+            Graviy.SetAudioListener(true);
             GameParams.SetStartTime(stageTime);
             SceneManager.SetActiveScene(gameObject.scene);
         }
 
         public override void OnFadeInDone()
         {
-            Debug.Log($"  fade in done");
             base.OnFadeInDone();
-            Debug.Log($"  fade in done2");
             SoundController.PlayBGM(SoundController.BgmType.Stage1 + GameParams.Stage);
         }
     }

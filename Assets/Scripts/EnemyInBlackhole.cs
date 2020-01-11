@@ -6,12 +6,24 @@ namespace HungraviyEx2019
 {
     public class EnemyInBlackhole : MonoBehaviour
     {
+        [Tooltip("音声"), SerializeField]
+        AudioClip[] audioClips = new AudioClip[2];
+
         public enum StateType
         {
             None = -1,
             In,
             Out,
             InDone,
+        }
+
+        /// <summary>
+        /// 効果音のリスト
+        /// </summary>
+        enum SeList
+        {
+            BlackholeIn,
+            ToSweets
         }
 
         /// <summary>
@@ -35,12 +47,14 @@ namespace HungraviyEx2019
         public bool isBlackholeRecoveried = false;
 
         Animator anim;
+        AudioSource myAudioSource = null;
 
         private void Awake()
         {
             anim = GetComponentInChildren<Animator>();
             NowState = StateType.None;
             NextState = StateType.None;
+            myAudioSource = GetComponent<AudioSource>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -77,6 +91,10 @@ namespace HungraviyEx2019
             if (NextState == StateType.In)
             {
                 NowState = StateType.In;
+                if (!myAudioSource.isPlaying)
+                {
+                    myAudioSource.PlayOneShot(audioClips[(int)SeList.BlackholeIn]);
+                }
                 // 終了チェック
                 if (isBlackholeInDone)
                 {
@@ -115,6 +133,14 @@ namespace HungraviyEx2019
         {
             isBlackholeInDone = isBlackholeRecoveried = false;
             NextState = StateType.None;
+        }
+
+        /// <summary>
+        /// スイーツ化効果音
+        /// </summary>
+        public void ToSweetSe()
+        {
+            myAudioSource.PlayOneShot(audioClips[(int)SeList.ToSweets]);
         }
     }
 }

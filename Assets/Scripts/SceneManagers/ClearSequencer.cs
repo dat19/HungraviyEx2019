@@ -80,6 +80,7 @@ namespace HungraviyEx2019
             {
                 GameManager.instance.PerfectBonusText(PerfectBonusMessage);
                 GameParams.AddScore(PerfectPoint);
+                SoundController.Play(SoundController.SeType.Click);
             }
             else
             {
@@ -87,6 +88,8 @@ namespace HungraviyEx2019
             }
 
             yield return WaitForSecondsOrClick(WaitNextSeconds);
+
+            SoundController.Play(SoundController.SeType.Start);
 
             GameManager.ShowClick();
             CanNext = true;
@@ -105,6 +108,7 @@ namespace HungraviyEx2019
 
                 bonus += LifeBonusPoint;
                 GameParams.AddScore(LifeBonusPoint);
+                SoundController.Play(SoundController.SeType.Click);
                 GameParams.LifeDecrement();
                 GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
             }
@@ -127,6 +131,7 @@ namespace HungraviyEx2019
                 {
                     bonus += keta;
                     GameParams.AddScore(keta);
+                    SoundController.Play(SoundController.SeType.Click);
                     leftTime -= keta;
 
                     GameManager.instance.TimeBonusText($"{TimeBonusPrefix}{bonus,5}</mspace>");

@@ -206,6 +206,7 @@ namespace HungraviyEx2019
         {
             if (sweets != null)
             {
+                SoundController.Play(SoundController.SeType.ToItem);
                 GameManager.DecrementItemCount();
                 Instantiate(sweets, transform.position, Quaternion.identity);
             }

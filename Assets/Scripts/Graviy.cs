@@ -275,6 +275,8 @@ namespace HungraviyEx2019 {
             // 無敵時間設定
             mutekiTime = mutekiSeconds;
 
+            SoundController.Play(SoundController.SeType.Miss);
+
             // 吹っ飛び処理
             Vector3 hitpos = col.ClosestPoint(transform.position);
             Vector3 addVec = transform.position - hitpos;
@@ -339,13 +341,16 @@ namespace HungraviyEx2019 {
             }
             GameManager.GetItemCount();
             eatingCount--;
-            SoundController.Play(SoundController.SeType.Eat);
 
             // 全て食べていたら、口を閉じる
             if (eatingCount <= 0)
             {
                 isEating = false;
                 CloseMouth();
+            }
+            else
+            {
+                SoundController.Play(SoundController.SeType.Eat);
             }
         }
 
@@ -354,7 +359,19 @@ namespace HungraviyEx2019 {
         /// </summary>
         public void CloseMouth()
         {
+            SoundController.Play(SoundController.SeType.Eat);
             anim.SetBool("Inhale", false);
+        }
+
+        /// <summary>
+        /// オーディオリスナを設定します。
+        /// </summary>
+        /// <param name="flag"></param>
+        public static void SetAudioListener(bool flag)
+        {
+            AudioListener al = instance.GetComponent<AudioListener>();
+            al.enabled = flag;
+            SoundController.SetAudioListener(!flag);
         }
     }
 }

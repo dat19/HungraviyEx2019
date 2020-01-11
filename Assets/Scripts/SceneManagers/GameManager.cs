@@ -97,6 +97,7 @@ namespace HungraviyEx2019
             {
                 if (Input.GetMouseButtonDown(0))
                 {
+                    Graviy.SetAudioListener(false);
                     SoundController.Play(SoundController.SeType.Click);
                     instance.clickAnimator.SetBool("Show", false);
 
@@ -181,6 +182,7 @@ namespace HungraviyEx2019
             state = StateType.GameOver;
             waitStartTime = Time.time;
             SoundController.PlayBGM(SoundController.BgmType.GameOver);
+            Graviy.SetAudioListener(false);
         }
 
         public static void ShowClick()
