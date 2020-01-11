@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyRecoveryOnGround: 0.4
-  energyRecoveryInTheAir: 0.2
+  energyRecoveryInTheAir: 0.25
   energyFood: 0.5
   hungryAnim: 0.33
   eatItemSeconds: 0.5

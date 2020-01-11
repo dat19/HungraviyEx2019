@@ -20,7 +20,7 @@ namespace HungraviyEx2019
         public override void OnFadeInDone()
         {
             base.OnFadeInDone();
-            SoundController.PlayBGM(SoundController.BgmType.Stage1 + GameParams.Stage);
+            SoundController.PlayBGM(SoundController.BgmType.Stage1 + (GameParams.Stage/2));
         }
     }
 }

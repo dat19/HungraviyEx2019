@@ -42,7 +42,8 @@ namespace HungraviyEx2019
             Pomp,
             Start,
             Click,
-            Miss
+            Miss,
+            FallBlock,
         };
         [TooltipAttribute("効果音リスト"), SerializeField]
         private AudioClip[] seList = null;

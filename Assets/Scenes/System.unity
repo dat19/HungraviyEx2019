@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f5d418ab7e87249a693f60d0062e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartStage: 0
+  StartStage: 1
   guiSkin: {fileID: 11400000, guid: 2c57fcf1cd7a4044bab40b15a6bde6c7, type: 2}
 --- !u!82 &190469380
 AudioSource:
@@ -400,6 +400,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e7933bb08b14aaa408de4c1ff1906ef1, type: 3}
   - {fileID: 8300000, guid: 5e4100f1392fd4742a6c85de3c173a14, type: 3}
   - {fileID: 8300000, guid: 99fdeb9f54bb1894089e2c5aed1ca921, type: 3}
+  - {fileID: 8300000, guid: 799e83bc21e517b4ba6fcd19c496ae2e, type: 3}
   bgmList:
   - {fileID: 8300000, guid: d53f62aa619650f4ab876769a7431949, type: 3}
   - {fileID: 8300000, guid: 11a8ab3cc57c99749ab81773786dfbd4, type: 3}
