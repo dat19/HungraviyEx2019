@@ -80,7 +80,7 @@ namespace HungraviyEx2019
             {
                 GameManager.instance.PerfectBonusText(PerfectBonusMessage);
                 GameParams.AddScore(PerfectPoint);
-                SoundController.Play(SoundController.SeType.Click);
+                SoundController.Play(SoundController.SeType.Start);
             }
             else
             {
