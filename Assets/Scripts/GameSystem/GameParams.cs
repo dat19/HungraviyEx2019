@@ -119,7 +119,7 @@ namespace HungraviyEx2019
         {
             if (Graviy.CanMove)
             {
-                playTime -= Time.fixedDeltaTime;
+                playTime = Mathf.Max(playTime - Time.fixedDeltaTime, 0f);
             }
         }
 

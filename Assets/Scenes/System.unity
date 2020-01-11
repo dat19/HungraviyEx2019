@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f5d418ab7e87249a693f60d0062e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartStage: 1
+  StartStage: 0
   guiSkin: {fileID: 11400000, guid: 2c57fcf1cd7a4044bab40b15a6bde6c7, type: 2}
 --- !u!82 &190469380
 AudioSource:
