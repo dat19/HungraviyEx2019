@@ -197,15 +197,27 @@ namespace HungraviyEx2019 {
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            if (collision.collider.CompareTag("Map"))
+            {
+                SoundController.Play(SoundController.SeType.Pomp);
+                return;
+            }
+
+            OnCollisionStay2D(collision);
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
             if (mutekiTime >= 0) return;
 
             if (collision.collider.CompareTag("Item"))
             {
-                if (eatingCount >= EatingMax) {
+                if (eatingCount >= EatingMax)
+                {
 #if UNITY_EDITOR
                     Debug.Log($"これ以上食べられない");
 #endif
-                    return; 
+                    return;
                 }
 
                 eatingObjects[eatingCount] = collision.collider.GetComponent<Item>();
@@ -230,11 +242,6 @@ namespace HungraviyEx2019 {
                 isEating = true;
                 anim.SetBool("Inhale", true);
             }
-        }
-
-        private void OnCollisionStay2D(Collision2D collision)
-        {
-            OnCollisionEnter2D(collision);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
