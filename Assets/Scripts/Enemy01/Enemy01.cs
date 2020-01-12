@@ -65,8 +65,6 @@ namespace HungraviyEx2019
                         state = StateType.Move;
                         SetTarget(route.routes[index].targetPosition, route.routes[index].speed);
                     }
-                    Debug.Log($"  {Time.time-startTime} / {route.routes[index].waitSeconds}");
-
                     break;
 
                 case StateType.Move:

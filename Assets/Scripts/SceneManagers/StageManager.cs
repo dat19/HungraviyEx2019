@@ -21,6 +21,7 @@ namespace HungraviyEx2019
         {
             base.OnFadeInDone();
             SoundController.PlayBGM(SoundController.BgmType.Stage1 + (GameParams.Stage/2));
+            Tutorial.Next();
         }
     }
 }

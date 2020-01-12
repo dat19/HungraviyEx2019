@@ -33,7 +33,8 @@ namespace HungraviyEx2019
 
         const string TimeBonusPrefix = "タイムボーナス <mspace=0.7em>";
         const string LifeBonusPrefix = "ライフボーナス <mspace=0.7em>";
-        readonly static string PerfectBonusMessage = $"パーフェクト!!      <mspace=0.7em>{PerfectPoint}</mspace>";
+        readonly static string PerfectBonusMessage = $"アイテムパーフェクト!!   <mspace=0.7em>{PerfectPoint}</mspace>";
+        //
         const string Kosu = "<size=40>";
         static readonly WaitForFixedUpdate waitFixed = new WaitForFixedUpdate();
 

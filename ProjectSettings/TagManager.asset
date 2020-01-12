@@ -66,3 +66,6 @@ TagManager:
   - name: Item
     uniqueID: 1147851535
     locked: 0
+  - name: BGFront
+    uniqueID: 1745504187
+    locked: 0

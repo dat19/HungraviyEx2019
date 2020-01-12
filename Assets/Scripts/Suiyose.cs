@@ -50,6 +50,10 @@ namespace HungraviyEx2019
         {
             if (!isSelfSuck || !Graviy.CanMove)
             {
+                if (myAudioSource != null)
+                {
+                    myAudioSource.Stop();
+                }
                 return;
             }
 
