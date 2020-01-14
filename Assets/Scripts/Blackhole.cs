@@ -4,12 +4,15 @@ using UnityEngine;
 
 namespace HungraviyEx2019
 {
+    [RequireComponent(typeof(AudioSource))]
     public class Blackhole : MonoBehaviour
     {
         public static Blackhole instance = null;
 
         [Tooltip("最高速度"), SerializeField]
         float speedMax = 10f;
+        [Tooltip("音のフェードアウト秒数"), SerializeField]
+        float seFadeOutSeconds = 0.5f;
 
         /// <summary>
         /// エネルギーがあって、マウスをクリックしている時、true
@@ -37,12 +40,18 @@ namespace HungraviyEx2019
         /// </summary>
         Vector3 clearOffset;
 
+        AudioSource audioSource;
+        float seFadeOutTime;
+        bool isSeFadeOut = false;
+
         private void Awake()
         {
             instance = this;
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
             animSpawn = false;
+            isSeFadeOut = false;
         }
 
         /// <summary>
@@ -55,19 +64,36 @@ namespace HungraviyEx2019
             isClear = true;
             IsSpawn = false;
             anim.SetBool("Spawn", true);
+            PlaySe();
         }
 
         public void ClearDone()
         {
             isClear = false;
             anim.SetBool("Spawn", false);
+            StopSe();
         }
 
         private void FixedUpdate()
         {
+            if (isSeFadeOut)
+            {
+                seFadeOutTime += Time.fixedDeltaTime;
+                if (seFadeOutTime >= seFadeOutSeconds)
+                {
+                    isSeFadeOut = false;
+                    audioSource.Stop();
+                }
+                else
+                {
+                    audioSource.volume = SoundController.SeVolume * (1f-(seFadeOutSeconds / seFadeOutSeconds));
+                }
+            }
+
             if (!isClear && !Graviy.CanMove)
             {
                 anim.SetBool("Spawn", false);
+                StopSe();
                 return;
             }
 
@@ -91,6 +117,7 @@ namespace HungraviyEx2019
             if (!animSpawn)
             {
                 lastSpawned = false;
+                StopSe();
                 return transform.position; 
             }
 
@@ -105,6 +132,7 @@ namespace HungraviyEx2019
 
             if (!lastSpawned)
             {
+                PlaySe();
                 transform.position = target;
                 rb.velocity = Vector3.zero;
                 lastSpawned = true;
@@ -129,6 +157,32 @@ namespace HungraviyEx2019
         {
             animSpawn = false;
         }
+
+        /// <summary>
+        /// ブラックホールの効果音が始まっていなければ開始します。
+        /// </summary>
+        void PlaySe()
+        {
+            if (!lastSpawned || isSeFadeOut)
+            {
+                isSeFadeOut = false;
+                audioSource.volume = SoundController.SeVolume;
+                audioSource.Play();
+            }
+        }
+
+        /// <summary>
+        /// ブラックホールの効果音をフェードアウトさせる
+        /// </summary>
+        void StopSe()
+        {
+            if (!isSeFadeOut && audioSource.isPlaying)
+            {
+                isSeFadeOut = true;
+                seFadeOutTime = 0f;
+            }
+        }
+
 
     }
 }

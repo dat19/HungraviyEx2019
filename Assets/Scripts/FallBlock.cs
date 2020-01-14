@@ -20,6 +20,7 @@ namespace HungraviyEx2019
         {
             if (collision.collider.CompareTag("Player") && rb.bodyType == RigidbodyType2D.Kinematic)
             {
+                SoundController.Play(SoundController.SeType.FallBlock);
                 rb.bodyType = RigidbodyType2D.Dynamic;
                 anim.SetTrigger("Fall");
                 Destroy(gameObject, DestroySeconds);

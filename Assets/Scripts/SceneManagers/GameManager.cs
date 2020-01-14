@@ -97,7 +97,8 @@ namespace HungraviyEx2019
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    SoundController.Play(SoundController.SeType.Click);
+                    Graviy.SetAudioListener(false);
+                    SoundController.Play(SoundController.SeType.Start);
                     instance.clickAnimator.SetBool("Show", false);
 
                     // ステージクリア
@@ -127,6 +128,7 @@ namespace HungraviyEx2019
         {
             state = StateType.Clear;
             waitStartTime = Time.time;
+            SoundController.PlayBGM(SoundController.BgmType.Clear);
             ClearSequencer.Start(co);
         }
 
@@ -179,6 +181,8 @@ namespace HungraviyEx2019
             instance.gameOverAnimator.SetTrigger("GameOver");
             state = StateType.GameOver;
             waitStartTime = Time.time;
+            SoundController.PlayBGM(SoundController.BgmType.GameOver);
+            Graviy.SetAudioListener(false);
         }
 
         public static void ShowClick()

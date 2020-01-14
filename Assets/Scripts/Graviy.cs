@@ -25,6 +25,8 @@ namespace HungraviyEx2019 {
         float blowOffAdd = 15f;
         [Tooltip("ゲームオーバー時の重力スケール"), SerializeField]
         float gameOverGravityScale = 0.5f;
+        [Tooltip("衝突音を鳴らす時の速度"), SerializeField]
+        float pompSeVelocity = 1f;
 
         [Header("デバッグ")]
         [Tooltip("無敵"), SerializeField]
@@ -197,15 +199,30 @@ namespace HungraviyEx2019 {
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            if (collision.collider.CompareTag("Map"))
+            {
+                if (rb.velocity.magnitude > pompSeVelocity)
+                {
+                    SoundController.Play(SoundController.SeType.Pomp);
+                }
+                return;
+            }
+
+            OnCollisionStay2D(collision);
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
             if (mutekiTime >= 0) return;
 
             if (collision.collider.CompareTag("Item"))
             {
-                if (eatingCount >= EatingMax) {
+                if (eatingCount >= EatingMax)
+                {
 #if UNITY_EDITOR
                     Debug.Log($"これ以上食べられない");
 #endif
-                    return; 
+                    return;
                 }
 
                 eatingObjects[eatingCount] = collision.collider.GetComponent<Item>();
@@ -230,11 +247,6 @@ namespace HungraviyEx2019 {
                 isEating = true;
                 anim.SetBool("Inhale", true);
             }
-        }
-
-        private void OnCollisionStay2D(Collision2D collision)
-        {
-            OnCollisionEnter2D(collision);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -274,6 +286,8 @@ namespace HungraviyEx2019 {
 
             // 無敵時間設定
             mutekiTime = mutekiSeconds;
+
+            SoundController.Play(SoundController.SeType.Miss);
 
             // 吹っ飛び処理
             Vector3 hitpos = col.ClosestPoint(transform.position);
@@ -346,6 +360,10 @@ namespace HungraviyEx2019 {
                 isEating = false;
                 CloseMouth();
             }
+            else
+            {
+                SoundController.Play(SoundController.SeType.Eat);
+            }
         }
 
         /// <summary>
@@ -353,7 +371,19 @@ namespace HungraviyEx2019 {
         /// </summary>
         public void CloseMouth()
         {
+            SoundController.Play(SoundController.SeType.Eat);
             anim.SetBool("Inhale", false);
+        }
+
+        /// <summary>
+        /// オーディオリスナを設定します。
+        /// </summary>
+        /// <param name="flag"></param>
+        public static void SetAudioListener(bool flag)
+        {
+            AudioListener al = instance.GetComponent<AudioListener>();
+            al.enabled = flag;
+            SoundController.SetAudioListener(!flag);
         }
     }
 }

@@ -34,7 +34,16 @@ namespace HungraviyEx2019
         [SerializeField]
         public enum SeType
         {
+            Blackhole,
+            Sucked,
+            Press,
+            ToItem,
+            Eat,
+            Pomp,
+            Start,
             Click,
+            Miss,
+            FallBlock,
         };
         [TooltipAttribute("効果音リスト"), SerializeField]
         private AudioClip[] seList = null;
@@ -44,7 +53,12 @@ namespace HungraviyEx2019
         /// </summary>
         public enum BgmType
         {
-            Title,
+            Stage1,
+            Stage2,
+            Stage3,
+            Clear,
+            GameOver,
+            Ending
         }
         [Tooltip("BGMリスト"), SerializeField]
         private AudioClip[] bgmList = null;
@@ -105,6 +119,8 @@ namespace HungraviyEx2019
         /// </summary>
         static float fadeSeconds;
 
+        static AudioListener myAudioListener = null;
+
         #region System
 
         void Awake()
@@ -115,6 +131,7 @@ namespace HungraviyEx2019
             }
             isFadingOut = false;
             useFade = false;
+            myAudioListener = GetComponentInChildren<AudioListener>();
         }
 
         private void FixedUpdate()
@@ -240,6 +257,15 @@ namespace HungraviyEx2019
                 }
                 yield return null;
             }
+        }
+
+        /// <summary>
+        /// オーディオリスナの有効・無効切り替え
+        /// </summary>
+        /// <param name="flag"></param>
+        public static void SetAudioListener(bool flag)
+        {
+            myAudioListener.enabled = flag;
         }
 
         #endregion Service Methods

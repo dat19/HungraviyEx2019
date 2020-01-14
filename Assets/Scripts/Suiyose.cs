@@ -36,17 +36,24 @@ namespace HungraviyEx2019
         int lastFrameCount = 0;
 #endif
 
+        AudioSource myAudioSource = null;
+
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             myCollider = GetComponent<Collider2D>();
             defaultGravityScale = rb.gravityScale;
+            myAudioSource = GetComponent<AudioSource>();
         }
 
         private void FixedUpdate()
         {
             if (!isSelfSuck || !Graviy.CanMove)
             {
+                if (myAudioSource != null)
+                {
+                    myAudioSource.Stop();
+                }
                 return;
             }
 
@@ -65,6 +72,16 @@ namespace HungraviyEx2019
                 var kyori = move.magnitude;
                 if (kyori <= distanceMax)
                 {
+                    // 効果音調整
+                    if (myAudioSource != null)
+                    {
+                        myAudioSource.volume = (1f-(kyori / distanceMax));
+                        if (!myAudioSource.isPlaying)
+                        {
+                            myAudioSource.Play();
+                        }
+                    }
+
                     // 高さによる重さ変更
                     var distY = Mathf.Abs(bl.position.y - myCollider.bounds.center.y);
                     distY = Mathf.Max(0f, distY - myCollider.bounds.extents.y);
@@ -89,6 +106,20 @@ namespace HungraviyEx2019
                     lastSuckTime = Time.time;
 #endif
 
+                }
+                else
+                {
+                    if (myAudioSource != null)
+                    {
+                        myAudioSource.Stop();
+                    }
+                }
+            }
+            else
+            {
+                if (myAudioSource != null)
+                {
+                    myAudioSource.Stop();
                 }
             }
 

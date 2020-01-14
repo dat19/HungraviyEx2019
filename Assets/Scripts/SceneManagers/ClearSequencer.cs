@@ -33,7 +33,8 @@ namespace HungraviyEx2019
 
         const string TimeBonusPrefix = "タイムボーナス <mspace=0.7em>";
         const string LifeBonusPrefix = "ライフボーナス <mspace=0.7em>";
-        readonly static string PerfectBonusMessage = $"パーフェクト!!      <mspace=0.7em>{PerfectPoint}</mspace>";
+        readonly static string PerfectBonusMessage = $"アイテムパーフェクト!!   <mspace=0.7em>{PerfectPoint}</mspace>";
+        //
         const string Kosu = "<size=40>";
         static readonly WaitForFixedUpdate waitFixed = new WaitForFixedUpdate();
 
@@ -80,6 +81,7 @@ namespace HungraviyEx2019
             {
                 GameManager.instance.PerfectBonusText(PerfectBonusMessage);
                 GameParams.AddScore(PerfectPoint);
+                SoundController.Play(SoundController.SeType.Start);
             }
             else
             {
@@ -105,6 +107,7 @@ namespace HungraviyEx2019
 
                 bonus += LifeBonusPoint;
                 GameParams.AddScore(LifeBonusPoint);
+                SoundController.Play(SoundController.SeType.Click);
                 GameParams.LifeDecrement();
                 GameManager.instance.LifeBonusText($"{LifeBonusPrefix}{bonus,5}</mspace>");
             }
@@ -127,6 +130,7 @@ namespace HungraviyEx2019
                 {
                     bonus += keta;
                     GameParams.AddScore(keta);
+                    SoundController.Play(SoundController.SeType.Click);
                     leftTime -= keta;
 
                     GameManager.instance.TimeBonusText($"{TimeBonusPrefix}{bonus,5}</mspace>");

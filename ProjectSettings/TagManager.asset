@@ -10,6 +10,7 @@ TagManager:
   - Blackhole
   - Item
   - FallBlock
+  - Map
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Toge
   - EatingItem
   - GameOverPlayer
-  - 
+  - Enemy01
   - 
   - 
   - 
@@ -64,4 +65,7 @@ TagManager:
     locked: 0
   - name: Item
     uniqueID: 1147851535
+    locked: 0
+  - name: BGFront
+    uniqueID: 1745504187
     locked: 0

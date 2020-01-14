@@ -24,7 +24,7 @@ namespace HungraviyEx2019
         /// <summary>
         /// 全ステージ数
         /// </summary>
-        public const int StageMax = 3;
+        public const int StageMax = 4;
 
         /// <summary>
         /// ライフの上限数
@@ -119,7 +119,7 @@ namespace HungraviyEx2019
         {
             if (Graviy.CanMove)
             {
-                playTime -= Time.fixedDeltaTime;
+                playTime = Mathf.Max(playTime - Time.fixedDeltaTime, 0f);
             }
         }
 

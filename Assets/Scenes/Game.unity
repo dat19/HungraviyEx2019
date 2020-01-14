@@ -199,6 +199,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8337151768918598205, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c3b9ee15307c0e4d9c0ca766ce18d14, type: 3}
 --- !u!1 &891870887
@@ -298,6 +303,35 @@ PrefabInstance:
     - target: {fileID: 1531950946932778, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
       propertyPath: m_Name
       value: GameUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_textInfo.materialCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_text
+      value: "\u30A2\u30A4\u30C6\u30E0\u30D1\u30FC\u30D5\u30A7\u30AF\u30C8!! <mspace=0.7em>
+        5000</mspace>"
       objectReference: {fileID: 0}
     - target: {fileID: 224251144123527456, guid: e8208d9ec55f4a344adf32f65f916d86,
         type: 3}
@@ -478,30 +512,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1550937511, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
-      propertyPath: m_textInfo.materialCount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 674572275, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
       propertyPath: m_Material
       value: 
@@ -529,6 +539,14 @@ PrefabInstance:
     - target: {fileID: 618628640, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937510, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -115
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550937510, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 230
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8208d9ec55f4a344adf32f65f916d86, type: 3}

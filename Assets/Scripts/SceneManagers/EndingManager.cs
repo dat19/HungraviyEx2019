@@ -39,5 +39,11 @@ namespace HungraviyEx2019
                 SceneChanger.ChangeScene(SceneChanger.SceneType.Title);
             }
         }
+
+        public override void OnFadeInDone()
+        {
+            base.OnFadeInDone();
+            SoundController.PlayBGM(SoundController.BgmType.Ending);
+        }
     }
 }
