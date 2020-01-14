@@ -24,7 +24,7 @@ namespace HungraviyEx2019
         /// <summary>
         /// 全ステージ数
         /// </summary>
-        public const int StageMax = 3;
+        public const int StageMax = 4;
 
         /// <summary>
         /// ライフの上限数

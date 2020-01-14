@@ -133,6 +133,7 @@ namespace HungraviyEx2019 {
                     break;
 
                 case 2:
+                case 3:
                 case 5:
                 case 8:
                 case 9:

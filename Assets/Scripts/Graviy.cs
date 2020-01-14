@@ -25,6 +25,8 @@ namespace HungraviyEx2019 {
         float blowOffAdd = 15f;
         [Tooltip("ゲームオーバー時の重力スケール"), SerializeField]
         float gameOverGravityScale = 0.5f;
+        [Tooltip("衝突音を鳴らす時の速度"), SerializeField]
+        float pompSeVelocity = 1f;
 
         [Header("デバッグ")]
         [Tooltip("無敵"), SerializeField]
@@ -199,7 +201,10 @@ namespace HungraviyEx2019 {
         {
             if (collision.collider.CompareTag("Map"))
             {
-                SoundController.Play(SoundController.SeType.Pomp);
+                if (rb.velocity.magnitude > pompSeVelocity)
+                {
+                    SoundController.Play(SoundController.SeType.Pomp);
+                }
                 return;
             }
 

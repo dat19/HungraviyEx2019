@@ -205,23 +205,23 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 214705432}
-  - {fileID: 1742262084}
-  - {fileID: 1069038608}
-  - {fileID: 1078153481}
-  - {fileID: 962181587}
-  - {fileID: 1028300958}
-  - {fileID: 1608813557}
-  - {fileID: 1211765202}
-  - {fileID: 1203165985}
-  - {fileID: 1924724976}
-  - {fileID: 394547363}
   - {fileID: 382950884}
   - {fileID: 839742763}
-  - {fileID: 538297554}
   - {fileID: 872471692}
-  - {fileID: 1485790654}
+  - {fileID: 962181587}
+  - {fileID: 1028300958}
+  - {fileID: 1069038608}
+  - {fileID: 1078153481}
+  - {fileID: 1211765202}
   - {fileID: 1344013065}
+  - {fileID: 1485790654}
+  - {fileID: 1608813557}
+  - {fileID: 1742262084}
+  - {fileID: 1924724976}
   - {fileID: 300536313}
+  - {fileID: 394547363}
+  - {fileID: 538297554}
+  - {fileID: 1203165985}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4983,7 +4983,7 @@ PrefabInstance:
     - target: {fileID: 8609839053098766241, guid: 0825a92cf9ce96845bba14ae93036876,
         type: 3}
       propertyPath: cameraTop
-      value: 40
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8609839053098766241, guid: 0825a92cf9ce96845bba14ae93036876,
         type: 3}
@@ -5068,6 +5068,11 @@ PrefabInstance:
         type: 3}
       propertyPath: stageBgm
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144268611734000763, guid: d3083786604ab324e834ac0fc20de49a,
+        type: 3}
+      propertyPath: stageTime
+      value: 130
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3083786604ab324e834ac0fc20de49a, type: 3}
