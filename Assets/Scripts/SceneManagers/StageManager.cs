@@ -9,6 +9,8 @@ namespace HungraviyEx2019
     {
         [Tooltip("ステージ時間"), SerializeField]
         float stageTime = 99.99f;
+        [Tooltip("ステージごとのBGM"), SerializeField]
+        SoundController.BgmType stageBgm = SoundController.BgmType.Stage1;
 
         public override void OnFadeOutDone()
         {
@@ -20,7 +22,7 @@ namespace HungraviyEx2019
         public override void OnFadeInDone()
         {
             base.OnFadeInDone();
-            SoundController.PlayBGM(SoundController.BgmType.Stage1 + (GameParams.Stage/2));
+            SoundController.PlayBGM(stageBgm);
             Tutorial.Next();
         }
     }
