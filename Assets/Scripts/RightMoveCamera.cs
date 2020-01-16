@@ -16,7 +16,7 @@ namespace HungraviyEx2019
 
         const int DefaultWidth = 1920;
         const int DefaultHeight = 1080;
-        const float DefaultAspect = (float)DefaultWidth / (float)DefaultHeight;
+        public const float DefaultAspect = (float)DefaultWidth / (float)DefaultHeight;
 
         void Start()
         {

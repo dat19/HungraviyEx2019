@@ -87,6 +87,7 @@ namespace HungraviyEx2019 {
         static Vector3 mouthOffsetLeft = Vector3.zero;
         static Vector3 mouthOffsetRight = Vector3.zero;
         static int gameOverLayer;
+        static Vector3 screenLeft = Vector3.zero;
 
         /// <summary>
         /// 移動可能かどうかのフラグ
@@ -122,6 +123,7 @@ namespace HungraviyEx2019 {
             mouthOffsetRight = transform.Find("MouthPosition").transform.localPosition;
             mouthOffsetLeft.Set(-mouthOffsetRight.x, mouthOffsetRight.y, 0);
             gameOverLayer = LayerMask.NameToLayer("GameOverPlayer");
+            screenLeft.Set(0f, 0f, 1f);
         }
 
         private void Start()
@@ -129,6 +131,10 @@ namespace HungraviyEx2019 {
             mainCamera = Camera.main;
             mutekiTime = 0;
             Energy = EnergyMax;
+            if (mainCamera.aspect > RightMoveCamera.DefaultAspect)
+            {
+                screenLeft.x = (Screen.width - Screen.height * RightMoveCamera.DefaultAspect) * 0.5f;
+            }
         }
 
         void FixedUpdate()
@@ -318,20 +324,22 @@ namespace HungraviyEx2019 {
             }
         }
 
+        /// <summary>
+        /// 左端のチェック
+        /// </summary>
         public void AdjustLeftPosition()
         {
-            // 当たり判定の左端座標
-            var left = capsuleCollider2D.bounds.min;
+            // ぐらびぃの当たり判定の左端座標
+            var left = capsuleCollider2D.bounds.min.x;
 
             // ビューポート座標に変換
-            var vpos = mainCamera.WorldToViewportPoint(left);
+            var wpos = mainCamera.ScreenToWorldPoint(screenLeft);
 
             // 負の値なら補正
-            if (vpos.x < 0f)
+            if (left < wpos.x)
             {
-                var target = mainCamera.ViewportToWorldPoint(Vector3.zero);
                 var adjust = transform.position;
-                adjust.x = target.x + capsuleCollider2D.bounds.extents.x;
+                adjust.x = wpos.x + capsuleCollider2D.bounds.extents.x;
                 transform.position = adjust;
             }
         }
