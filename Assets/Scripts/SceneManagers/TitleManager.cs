@@ -68,6 +68,7 @@ namespace HungraviyEx2019
         /// <param name="flag"></param>
         public void DisplayCredit(bool flag)
         {
+            SoundController.Play(SoundController.SeType.Click);
             creditObject.SetActive(flag);
         }
     }
