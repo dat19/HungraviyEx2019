@@ -18,7 +18,10 @@ namespace HungraviyEx2019
 
         public static void SetEnable(bool flag)
         {
-            myCamera.enabled = flag;
+            if (myCamera != null)
+            {
+                myCamera.enabled = flag;
+            }
         }
     }
 }
