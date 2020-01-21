@@ -971,23 +971,28 @@ PrefabInstance:
     - target: {fileID: 4912915233341336592, guid: 49ebf8e75615a3d488d8052496089ded,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 492
+      value: 493
       objectReference: {fileID: 0}
     - target: {fileID: 4912915233341336592, guid: 49ebf8e75615a3d488d8052496089ded,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 116
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 4912915233341336592, guid: 49ebf8e75615a3d488d8052496089ded,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 81
+      value: 79
       objectReference: {fileID: 0}
     - target: {fileID: 4912915233341336592, guid: 49ebf8e75615a3d488d8052496089ded,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 77
+      value: 86
       objectReference: {fileID: 0}
+    - target: {fileID: 4912915233341336592, guid: 49ebf8e75615a3d488d8052496089ded,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 69e74589430f4044fb7bc198dd836f97, type: 2}
     - target: {fileID: 4912915231259628013, guid: 49ebf8e75615a3d488d8052496089ded,
         type: 3}
       propertyPath: m_Material
@@ -997,6 +1002,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912915231259628003, guid: 49ebf8e75615a3d488d8052496089ded,
+        type: 3}
+      propertyPath: m_Name
+      value: TMP SubMeshUI [Kaiso-Next-B SDF-staff + LiberationSans SDF Atlas]
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49ebf8e75615a3d488d8052496089ded, type: 3}
