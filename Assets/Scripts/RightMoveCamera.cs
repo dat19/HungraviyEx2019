@@ -7,6 +7,11 @@ namespace HungraviyEx2019
     [RequireComponent(typeof(BGScroller))]
     public class RightMoveCamera : MonoBehaviour
     {
+        [Tooltip("カメラの右限界"), SerializeField]
+        float rightMax = 10f;
+        [Tooltip("カメラの上限界"), SerializeField]
+        float topMax = 10f;
+
         /// <summary>
         /// プレイヤーからカメラの座標を求めるためのオフセット値
         /// </summary>
@@ -41,6 +46,15 @@ namespace HungraviyEx2019
             {
                 next.x = transform.position.x;
             }
+            if (next.x > rightMax)
+            {
+                next.x = rightMax;
+            }
+            if (next.y > topMax)
+            {
+                next.y = topMax;
+            }
+
             transform.position = next;
 
             Graviy.instance.AdjustLeftPosition();

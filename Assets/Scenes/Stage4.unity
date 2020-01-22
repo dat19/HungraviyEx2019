@@ -4990,6 +4990,16 @@ PrefabInstance:
       propertyPath: cameraBottom
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 3840370217707087231, guid: 0825a92cf9ce96845bba14ae93036876,
+        type: 3}
+      propertyPath: topMax
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840370217707087231, guid: 0825a92cf9ce96845bba14ae93036876,
+        type: 3}
+      propertyPath: rightMax
+      value: 255
+      objectReference: {fileID: 0}
     - target: {fileID: 4007083096920157506, guid: 0825a92cf9ce96845bba14ae93036876,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
