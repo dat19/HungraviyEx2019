@@ -131,6 +131,8 @@ namespace HungraviyEx2019
             Life = LifeMax;
 #if UNITY_EDITOR
             Stage = Instance.StartStage;
+#else
+            Stage =0;
 #endif
             Score = 0;
             isHighScore = false;

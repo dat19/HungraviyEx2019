@@ -23,12 +23,15 @@ namespace HungraviyEx2019
         TextMeshProUGUI lifeBonusText = null;
         [Tooltip("パーフェクトボーナステキスト"), SerializeField]
         TextMeshProUGUI perfectBonusText = null;
+        [Tooltip("ゲームオーバー時のボタンアニメ"), SerializeField]
+        Animator gameOverButtonAnimator = null;
         [Tooltip("シーン切り替えから、シーンを切り替えられるようになるまでの待ち時間"), SerializeField]
         float nextSceneWait = 1f;
 
         public enum StateType
         {
             Game,
+            ToGameOver,
             GameOver,
             Clear,
             NextScene,
@@ -71,27 +74,23 @@ namespace HungraviyEx2019
                 || (Time.time - waitStartTime < nextSceneWait))
                 return;
 
-            if (state == StateType.GameOver)
+            if (state == StateType.ToGameOver)
             {
-                if (!instance.clickAnimator.gameObject.activeSelf)
+                // ゲームオーバーになって、クリック可能になる秒数が経過したらボタンを表示してハイスコアチェック
+                if (GameParams.Stage > 0)
                 {
-                    // ゲームオーバーになって、クリック可能になる秒数が経過した初回にクリック表示とハイスコアチェック
-                    instance.clickAnimator.gameObject.SetActive(true);
-                    instance.clickAnimator.SetBool("Show", true);
-                    if (GameParams.CheckHighScore())
-                    {
-                        instance.highScoreAnimator.gameObject.SetActive(true);
-                        instance.highScoreAnimator.SetTrigger("Show");
-                    }
+                    gameOverButtonAnimator.SetTrigger("Show");
                 }
-
-                if (Input.GetMouseButtonDown(0))
+                else
                 {
-                    instance.clickAnimator.SetBool("Show", false);
-                    SoundController.Play(SoundController.SeType.Click);
-                    SceneChanger.ChangeScene(SceneChanger.SceneType.Title);
-                    state = StateType.NextScene;
+                    gameOverButtonAnimator.SetTrigger("ShowTitle");
                 }
+                if (GameParams.CheckHighScore())
+                {
+                    highScoreAnimator.gameObject.SetActive(true);
+                    highScoreAnimator.SetTrigger("Show");
+                }
+                state = StateType.GameOver;
             }
             else if (state == StateType.Clear && ClearSequencer.CanNext)
             {
@@ -99,7 +98,7 @@ namespace HungraviyEx2019
                 {
                     Graviy.SetAudioListener(false);
                     SoundController.Play(SoundController.SeType.Start);
-                    instance.clickAnimator.SetBool("Show", false);
+                    clickAnimator.SetBool("Show", false);
 
                     // ステージクリア
                     if (GameParams.NextStage())
@@ -179,7 +178,7 @@ namespace HungraviyEx2019
         {
             instance.gameOverAnimator.gameObject.SetActive(true);
             instance.gameOverAnimator.SetTrigger("GameOver");
-            state = StateType.GameOver;
+            state = StateType.ToGameOver;
             waitStartTime = Time.time;
             SoundController.PlayBGM(SoundController.BgmType.GameOver);
             Graviy.SetAudioListener(false);
@@ -213,6 +212,30 @@ namespace HungraviyEx2019
         public static void GetItemCount()
         {
             GetItem++;
+        }
+
+        /// <summary>
+        /// タイトル画面へ
+        /// </summary>
+        public void ToTitle()
+        {
+            if (state == StateType.NextScene) return;
+
+            SoundController.Play(SoundController.SeType.Click);
+            SceneChanger.ChangeScene(SceneChanger.SceneType.Title);
+            state = StateType.NextScene;
+        }
+
+        /// <summary>
+        /// コンティニュー
+        /// </summary>
+        public void Continue()
+        {
+            if (state == StateType.NextScene) return;
+
+            SoundController.Play(SoundController.SeType.Click);
+            SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
+            state = StateType.NextScene;
         }
     }
 }
