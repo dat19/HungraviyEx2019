@@ -30,9 +30,11 @@ namespace HungraviyEx2019 {
         [Tooltip("衝突音を鳴らす時の速度"), SerializeField]
         float pompSeVelocity = 1f;
 
+#pragma warning disable 414
         [Header("デバッグ")]
         [Tooltip("無敵"), SerializeField]
         bool isMuteki = false;
+#pragma warning restore 414
 
         public enum AnimType
         {

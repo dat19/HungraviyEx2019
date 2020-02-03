@@ -8,7 +8,7 @@ namespace HungraviyEx2019
     public class AnimDoneEvent : MonoBehaviour
     {
         [Tooltip("アニメが終了した時に実行するメソッド"), SerializeField]
-        UnityEvent animDoneEvent;
+        UnityEvent animDoneEvent = null;
 
         /// <summary>
         /// アニメが完了した時に実行するイベント
