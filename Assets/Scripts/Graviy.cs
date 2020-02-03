@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#define DEBUG_KEY
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -136,6 +138,24 @@ namespace HungraviyEx2019 {
                 screenLeft.x = (Screen.width - Screen.height * RightMoveCamera.DefaultAspect) * 0.5f;
             }
         }
+
+#if DEBUG_KEY
+        private void Update()
+        {
+            if (Input.GetKey(KeyCode.G) && Input.GetKey(KeyCode.O))
+            {
+                GameManager.GameOver();
+            }
+            if (Input.GetKey(KeyCode.C) && Input.GetKey(KeyCode.L))
+            {
+                GameObject go = GameObject.FindGameObjectWithTag("Clear");
+                if (go != null)
+                {
+                    Clear(go.GetComponent<Collider2D>());
+                }
+            }
+        }
+#endif
 
         void FixedUpdate()
         {
