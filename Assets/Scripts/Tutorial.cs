@@ -36,7 +36,7 @@ namespace HungraviyEx2019 {
         [Tooltip("メッセージ表示待ち秒数"), SerializeField]
         float nextTime = 4f;
         [Tooltip("表示オブジェクト"), SerializeField]
-        DisplayObject[] displayObjects;
+        DisplayObject[] displayObjects = null;
 
         static readonly string[] tutorialTexts =
         {

@@ -11,8 +11,11 @@ namespace HungraviyEx2019
     /// </summary>
     public class GameParams : Singleton<GameParams>
     {
+#pragma warning disable 414
         [Tooltip("デバッグ用開始ステージ"), SerializeField]
         int StartStage = 0;
+#pragma warning restore 414
+
         [Tooltip("GUISkin"), SerializeField]
         GUISkin guiSkin = null;
 
