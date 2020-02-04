@@ -144,6 +144,8 @@ namespace HungraviyEx2019 {
 #if DEBUG_KEY
         private void Update()
         {
+            if (GameManager.state != GameManager.StateType.Game) return;
+
             if (Input.GetKey(KeyCode.G) && Input.GetKey(KeyCode.O))
             {
                 GameManager.GameOver();
@@ -154,6 +156,7 @@ namespace HungraviyEx2019 {
                 if (go != null)
                 {
                     Clear(go.GetComponent<Collider2D>());
+                    GameParams.useDebugKey = true;
                 }
             }
         }
