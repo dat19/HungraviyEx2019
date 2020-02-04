@@ -10,6 +10,12 @@
 /[Ll]ogs/
 /[Mm]emoryCaptures/
 /Recordings/
+/Assets/NCMB/
+/Assets/naichilab/
+/Assets/Editor/
+/Assets/Plugins/
+/Assets/Keys/
+/Assets/Scenes/NCMB.*
 
 /[Aa]ssets/TextMesh Pro/
 /**/PrivateResources/

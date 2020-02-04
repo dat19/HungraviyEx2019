@@ -100,6 +100,11 @@ namespace HungraviyEx2019
         /// </summary>
         public static float playTime;
 
+        /// <summary>
+        /// デバッグキーを使ったらtrueにします
+        /// </summary>
+        public static bool useDebugKey;
+
         private void Awake()
         {
             Score = 0;
@@ -131,6 +136,7 @@ namespace HungraviyEx2019
         /// </summary>
         public static void NewGame()
         {
+            useDebugKey = false;
             Life = LifeMax;
 #if UNITY_EDITOR
             Stage = Instance.StartStage;

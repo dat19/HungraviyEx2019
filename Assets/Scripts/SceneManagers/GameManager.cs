@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace HungraviyEx2019
 {
@@ -35,6 +37,7 @@ namespace HungraviyEx2019
             GameOver,
             Clear,
             NextScene,
+            Ranking,
         }
 
         /// <summary>
@@ -89,6 +92,12 @@ namespace HungraviyEx2019
                 {
                     highScoreAnimator.gameObject.SetActive(true);
                     highScoreAnimator.SetTrigger("Show");
+                    if (!GameParams.useDebugKey)
+                    {
+                        state = StateType.Ranking;
+                        StartCoroutine(SceneChanger.ShowRanking(ToGameOver));
+                        return;
+                    }
                 }
                 state = StateType.GameOver;
             }
@@ -112,6 +121,11 @@ namespace HungraviyEx2019
                     state = StateType.NextScene;
                 }
             }
+        }
+
+        void ToGameOver()
+        {
+            state = StateType.GameOver;
         }
 
         public override void OnFadeOutDone()
@@ -236,6 +250,7 @@ namespace HungraviyEx2019
             SoundController.Play(SoundController.SeType.Click);
             SceneChanger.ChangeScene(SceneChanger.SceneType.Game);
             state = StateType.NextScene;
+            GameParams.useDebugKey = false;
         }
     }
 }

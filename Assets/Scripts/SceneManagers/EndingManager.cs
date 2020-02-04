@@ -15,22 +15,30 @@ namespace HungraviyEx2019
         [Tooltip("スタッフクレジットアニメ"), SerializeField]
         Animator scrollAnim = null;
 
+        enum StateType
+        {
+            Credit,
+            Ranking,
+            WaitClick
+        }
+
+
         float startTime;
         bool isHighScore;
-        bool scrollDone = false;
+        StateType state;
 
         private void Start()
         {
             startTime = nextSceneWait;
             isHighScore = GameParams.CheckHighScore();
-            scrollDone = false;
+            state = StateType.Credit;
         }
 
         private void Update()
         {
             if (Fade.IsFading) return;
 
-            if (!scrollDone)
+            if (state == StateType.Credit)
             {
                 if (Input.GetMouseButton(0))
                 {
@@ -41,13 +49,19 @@ namespace HungraviyEx2019
                     scrollAnim.SetFloat("Speed", 1f);
                 }
             }
-            else
+            else if (state == StateType.WaitClick)
             {
                 startTime -= Time.fixedDeltaTime;
                 if (isHighScore && !highScoreText.activeSelf)
                 {
                     highScoreText.SetActive(isHighScore);
                     highScoreText.GetComponent<Animator>().SetTrigger("Show");
+                    if (!GameParams.useDebugKey)
+                    {
+                        state = StateType.Ranking;
+                        StartCoroutine(SceneChanger.ShowRanking(ToWait));
+                        return;
+                    }
                 }
 
                 if (startTime > 0) return;
@@ -60,6 +74,15 @@ namespace HungraviyEx2019
             }
         }
 
+        /// <summary>
+        /// キー待ちへ
+        /// </summary>
+        void ToWait()
+        {
+            state = StateType.WaitClick;
+            startTime = nextSceneWait;
+        }
+
         public override void OnFadeInDone()
         {
             base.OnFadeInDone();
@@ -69,7 +92,7 @@ namespace HungraviyEx2019
 
         public void ScrollDone()
         {
-            scrollDone = true;
+            state = StateType.WaitClick;
         }
     }
 }

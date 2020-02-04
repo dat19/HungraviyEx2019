@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace HungraviyEx2019
 {
@@ -114,6 +115,8 @@ namespace HungraviyEx2019
 
         private void Awake()
         {
+            SceneManager.LoadSceneAsync("NCMB", LoadSceneMode.Additive);
+
             Instance = this;
             loadingSceneManagers = new SceneManagerBase[SceneManager.sceneCountInBuildSettings];
             loadingSceneManagerCount = 0;
@@ -135,9 +138,10 @@ namespace HungraviyEx2019
         {
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
-                if (SceneManager.GetSceneAt(i).name != "System")
+                Scene sc = SceneManager.GetSceneAt(i);
+                if ((sc.name != "System") && (sc.name != "NCMB"))
                 {
-                    unloadSceneOperations[unloadSceneCount] = SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i));
+                    unloadSceneOperations[unloadSceneCount] = SceneManager.UnloadSceneAsync(sc);
                     unloadSceneCount++;
                 }
             }
@@ -283,5 +287,24 @@ namespace HungraviyEx2019
             loadingSceneManagers[loadingSceneManagerCount] = smb;
             loadingSceneManagerCount++;
         }
+
+        /// <summary>
+        /// ハイスコアの送信と表示、表示完了待ちを行います。
+        /// </summary>
+        /// <param name="after">完了時に呼び出したいアクションを渡します。</param>
+        public static IEnumerator ShowRanking(UnityAction after)
+        {
+            naichilab.RankingLoader.Instance.SendScoreAndShowRanking(GameParams.HighScore);
+            while (!SceneManager.GetSceneByName("Ranking").IsValid())
+            {
+                yield return null;
+            }
+            while (SceneManager.GetSceneByName("Ranking").IsValid())
+            {
+                yield return null;
+            }
+            after();
+        }
+
     }
 }
